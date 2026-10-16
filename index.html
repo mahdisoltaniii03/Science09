@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>آزمایشگاه تعاملی ساختار اتم و یون‌ها | علوم تجربی پایه نهم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Marhey:wght@600;700&family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at 50% 0%, #172554 0%, #0b1120 55%, #050811 100%);
+            color: #f1f5f9;
+            overflow-x: hidden;
+            padding-bottom: 108px;
+        }
+        .font-fantasy-logo {
+            font-family: 'Marhey', 'Lalezar', 'Vazirmatn', cursive;
+            letter-spacing: 0.5px;
+        }
+        .logo-word-mahdi {
+            color: #38bdf8;
+            text-shadow: 0 4px 0 #082f49, 0 7px 15px rgba(0,0,0,0.9), 0 0 20px rgba(56,189,248,0.9);
+        }
+        .logo-word-soltani {
+            color: #fbbf24;
+            text-shadow: 0 4px 0 #451a03, 0 7px 15px rgba(0,0,0,0.9), 0 0 24px rgba(251,191,36,0.95);
+        }
+        .logo-fantasy-plaque {
+            background: radial-gradient(circle at 50% 25%, #1e1b4b 0%, #090d16 100%);
+            border: 2px solid rgba(251, 191, 36, 0.65);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.75), 0 0 25px rgba(56,189,248,0.25), inset 0 0 24px rgba(251,191,36,0.12);
+        }
+        .shell-circle { transition: stroke 0.3s ease, stroke-width 0.3s ease, opacity 0.3s ease; }
+        .electron-dot { filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.85)); }
+        .electron-dot-valence { filter: drop-shadow(0 0 9px rgba(250, 204, 21, 0.95)); }
+
+        /* Strict Scientific Chemical Symbol Formatting (Subscript Bottom-Left, Charge Top-Right) */
+        .chem-badge {
+            display: inline-flex;
+            align-items: baseline;
+            direction: ltr !important;
+            unicode-bidi: isolate !important;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 800;
+            white-space: nowrap;
+            vertical-align: baseline;
+            margin: 0 2px;
+        }
+        .chem-sub {
+            font-size: 0.66em;
+            line-height: 1;
+            transform: translateY(0.28em);
+            margin-right: 1.5px;
+            font-weight: 700;
+            opacity: 0.92;
+        }
+        .chem-el {
+            font-size: 1em;
+            line-height: 1;
+        }
+        .chem-sup {
+            font-size: 0.66em;
+            line-height: 1;
+            transform: translateY(-0.46em);
+            margin-left: 1.5px;
+            font-weight: 800;
+        }
+        .chem-formula {
+            display: inline-block;
+            direction: ltr !important;
+            unicode-bidi: isolate !important;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 700;
+            white-space: nowrap;
+            margin: 0 2px;
+        }
+        .chem-formula sub {
+            font-size: 0.72em;
+            vertical-align: sub;
+            line-height: 0;
+        }
+        .chem-formula sup {
+            font-size: 0.72em;
+            vertical-align: super;
+            line-height: 0;
+        }
+
+        /* Liquid Glass Bottom Navigation Dock */
+        .liquid-glass-dock {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.76) 0%, rgba(15, 23, 42, 0.86) 100%);
+            backdrop-filter: blur(22px) saturate(190%);
+            -webkit-backdrop-filter: blur(22px) saturate(190%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.78),
+                0 0 25px rgba(56, 189, 248, 0.16),
+                inset 0 1px 1px rgba(255, 255, 255, 0.35),
+                inset 0 -1px 2px rgba(0, 0, 0, 0.45);
+        }
+        .dock-btn {
+            position: relative;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dock-btn.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.32) 0%, rgba(99, 102, 241, 0.38) 100%);
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            transform: translateY(-4px);
+        }
+        .dock-btn.active .dock-icon {
+            color: #fbbf24;
+            filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.8));
+        }
+
+        /* Collapsible Top Header Sub-row */
+        #headerSubRow {
+            max-height: 44px;
+            opacity: 1;
+            overflow: hidden;
+            transition: max-height 0.28s ease, opacity 0.22s ease, padding 0.25s ease;
+        }
+        #headerSubRow.subrow-collapsed {
+            max-height: 0 !important;
+            opacity: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            border-top-width: 0 !important;
+        }
+
+        @keyframes shakeError {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake { animation: shakeError 0.4s ease both; }
+
+        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spinReverseSlow { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        @keyframes floatPulse {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-6px) scale(1.03); }
+        }
+        @keyframes shimmerBar {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .orbit-spin-cw { transform-origin: center; animation: spinSlow 9s linear infinite; }
+        .orbit-spin-ccw { transform-origin: center; animation: spinReverseSlow 6.5s linear infinite; }
+        .float-logo-anim { animation: floatPulse 3.2s ease-in-out infinite; }
+        .shimmer-progress {
+            background: linear-gradient(90deg, #38bdf8 0%, #facc15 50%, #a855f7 100%);
+            background-size: 200% 100%;
+            animation: shimmerBar 2s linear infinite;
+        }
+        .splash-hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            transform: scale(1.04);
+        }
+        @keyframes toastProgressShrink { from { width: 100%; } to { width: 0%; } }
+        .toast-timer-bar { animation: toastProgressShrink 5s linear forwards; }
+
+        /* Onboarding Tour Spotlight */
+        .tour-active-target {
+            position: relative !important;
+            z-index: 65 !important;
+            box-shadow: 0 0 0 4px #fbbf24, 0 0 40px rgba(56, 189, 248, 0.95) !important;
+            border-color: #fbbf24 !important;
+            transition: box-shadow 0.3s ease !important;
+        }
+        .tour-backdrop-dim {
+            background: rgba(2, 6, 23, 0.62);
+        }
+        .tour-card-top {
+            top: 12px !important;
+            bottom: auto !important;
+        }
+        .tour-card-bottom {
+            bottom: 94px !important;
+            top: auto !important;
+        }
+        .tab-panel { display: none; animation: fadeInTab 0.24s ease-out; }
+        .tab-panel.active { display: block; }
+        @keyframes fadeInTab {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-white">
+
+    <!-- =================================================================== -->
+    <!-- 1. SPLASH SCREEN (مهدی سلطانی)                                      -->
+    <!-- =================================================================== -->
+    <div id="splashLoadingScreen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center p-4 bg-slate-950 transition-all duration-500 ease-out overflow-hidden select-none">
+        <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sky-500/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-amber-500/15 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-md w-full bg-slate-900/95 backdrop-blur-2xl border-2 border-amber-400/50 rounded-[2rem] p-6 sm:p-7 shadow-[0_0_65px_rgba(251,191,36,0.22)] flex flex-col items-center text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/15 border border-amber-400/50 text-amber-300 text-xs font-extrabold mb-4">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+                <span>آزمایشگاه مجازی علوم تجربی پایه نهم</span>
+            </div>
+
+            <!-- Animated Atom & Flask Emblem -->
+            <div class="relative w-32 h-32 sm:w-36 sm:h-36 flex items-center justify-center mb-4 float-logo-anim">
+                <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-amber-400/35 via-rose-500/25 to-sky-400/35 blur-xl"></div>
+                <svg viewBox="0 0 200 200" class="w-full h-full overflow-visible">
+                    <defs>
+                        <linearGradient id="logoRingGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#38bdf8"/>
+                            <stop offset="50%" stop-color="#f43f5e"/>
+                            <stop offset="100%" stop-color="#fbbf24"/>
+                        </linearGradient>
+                        <linearGradient id="logoBadgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f59e0b"/>
+                            <stop offset="50%" stop-color="#ec4899"/>
+                            <stop offset="100%" stop-color="#6366f1"/>
+                        </linearGradient>
+                    </defs>
+                    <g class="orbit-spin-cw">
+                        <circle cx="100" cy="100" r="84" fill="none" stroke="url(#logoRingGrad1)" stroke-width="3" stroke-dasharray="12 6"/>
+                        <circle cx="100" cy="16" r="7.5" fill="#fbbf24" stroke="#451a03" stroke-width="1.5"/>
+                        <circle cx="100" cy="184" r="7.5" fill="#fbbf24" stroke="#451a03" stroke-width="1.5"/>
+                        <circle cx="184" cy="100" r="6.5" fill="#38bdf8" stroke="#082f49" stroke-width="1.5"/>
+                    </g>
+                    <g class="orbit-spin-ccw">
+                        <circle cx="100" cy="100" r="62" fill="none" stroke="#38bdf8" stroke-width="2.2" opacity="0.75"/>
+                        <circle cx="38" cy="100" r="6.5" fill="#38bdf8" stroke="#082f49" stroke-width="1.5"/>
+                        <circle cx="162" cy="100" r="6.5" fill="#f43f5e" stroke="#4c0519" stroke-width="1.5"/>
+                    </g>
+                    <circle cx="100" cy="100" r="42" fill="url(#logoBadgeGrad)" stroke="#fef08a" stroke-width="3"/>
+                    <path d="M92 78h16M96 78v13l-13 21a5 5 0 004.3 7.5h25.4a5 5 0 004.3-7.5l-13-21V78" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M88 108h24l4 6.5a2 2 0 01-1.7 3H85.7a2 2 0 01-1.7-3l4-6.5z" fill="#fef08a"/>
+                    <circle cx="96" cy="102" r="2.4" fill="#ffffff"/>
+                    <circle cx="104" cy="96" r="2" fill="#fef08a"/>
+                </svg>
+            </div>
+
+            <!-- 3D High-Contrast Brand Plaque: مهدی سلطانی -->
+            <div class="w-full logo-fantasy-plaque rounded-3xl px-4 py-4 mb-5 relative overflow-hidden">
+                <span class="absolute top-2 right-3 text-amber-400 text-sm">✦</span>
+                <span class="absolute top-2 left-3 text-sky-400 text-sm">✦</span>
+                <div class="font-fantasy-logo text-4xl sm:text-5xl font-black tracking-wide flex items-center justify-center gap-2.5 flex-wrap py-1">
+                    <span class="logo-word-mahdi">مهدی</span>
+                    <span class="logo-word-soltani">سلطانی</span>
+                </div>
+                <div class="mt-2.5 inline-block px-4 py-1 rounded-full bg-gradient-to-r from-rose-500 via-pink-500 to-purple-600 text-white text-xs sm:text-sm font-extrabold shadow-md border border-pink-300/40">
+                    طراح و سازنده نرم‌افزار آموزشی علوم نهم
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full space-y-2 mb-4">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-300 px-1">
+                    <span id="splashStatusText">در حال آماده‌سازی تجهیزات آزمایشگاه...</span>
+                    <span id="splashPercentText" class="text-amber-400 font-extrabold">۰٪</span>
+                </div>
+                <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
+                    <div id="splashProgressBar" class="h-full rounded-full shimmer-progress transition-all duration-100 ease-out" style="width: 12%;"></div>
+                </div>
+            </div>
+
+            <!-- Instant Enter Button -->
+            <button id="btnEnterLabNow" type="button" class="w-full py-3 px-5 rounded-2xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 hover:from-sky-400 hover:to-purple-500 text-white font-extrabold text-sm shadow-lg shadow-sky-500/25 border border-sky-400/30 transition transform active:scale-95 cursor-pointer flex items-center justify-center gap-2">
+                <span>ورود به آزمایشگاه</span>
+                <svg class="w-4 h-4 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 2. COMPACT AUTO-COLLAPSING TOP HEADER                               -->
+    <!-- =================================================================== -->
+    <header id="mainLabHeader" class="sticky top-0 z-40 backdrop-blur-xl bg-slate-900/90 border-b border-slate-800/80 shadow-md transition-all">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex items-center justify-between gap-2">
+            <!-- Right: Title & Logo -->
+            <div class="flex items-center gap-2 min-w-0">
+                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center shadow-sm shrink-0">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2"/>
+                        <circle cx="18" cy="18" r="8" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="18" cy="4" r="2.8" fill="#fde047"/>
+                        <circle cx="18" cy="26" r="2.4" fill="#38bdf8"/>
+                    </svg>
+                </div>
+                <h1 class="text-xs sm:text-base font-extrabold text-white truncate">
+                    آزمایشگاه تعاملی اتم و یون
+                </h1>
+            </div>
+
+            <!-- Left: Discovery Counter Badge + Mahdi Soltani Badge -->
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <button id="btnHeaderProgressBadge" type="button" title="مشاهده دستاوردها و کاپ‌ها" class="px-2.5 py-1 rounded-full bg-amber-500/15 hover:bg-amber-500/25 border border-amber-400/50 text-amber-300 text-[11px] sm:text-xs font-extrabold flex items-center gap-1 transition cursor-pointer whitespace-nowrap">
+                    <span>🏆</span>
+                    <span id="headerDiscoveredText">۱ / ۴۰ کشف‌شده</span>
+                </button>
+                <button id="btnShowBrandSplash" type="button" title="نمایش لوگوی مهدی سلطانی" class="font-fantasy-logo text-xs sm:text-sm px-2.5 py-1 rounded-full bg-slate-950 hover:bg-slate-900 border border-amber-400/70 transition shadow-sm cursor-pointer flex items-center gap-1 shrink-0 whitespace-nowrap">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span class="text-sky-400 font-bold">مهدی</span>
+                    <span class="text-amber-400 font-bold">سلطانی</span>
+                </button>
+            </div>
+        </div>
+        <!-- Secondary Sub-Row that auto-collapses when scrolling down -->
+        <div id="headerSubRow" class="max-w-7xl mx-auto px-3 sm:px-6 py-1 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
+            <span class="truncate">فصل ۱ (مواد و نقش آن‌ها در زندگی) و فصل ۲ (رفتار اتم‌ها با یکدیگر) — علوم نهم</span>
+            <span id="headerCurrentParticleMini" class="text-sky-300 font-bold shrink-0">ذره فعلی: سدیم</span>
+        </div>
+    </header>
+
+    <!-- =================================================================== -->
+    <!-- 3. PRE-TOUR WELCOME & READINESS CONFIRMATION MODAL                  -->
+    <!-- =================================================================== -->
+    <div id="tourReadinessModal" class="fixed inset-0 z-[85] tour-backdrop-dim hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900/95 backdrop-blur-2xl border-2 border-sky-400/70 rounded-[2rem] max-w-md w-full p-5 sm:p-6 shadow-[0_25px_70px_rgba(0,0,0,0.9),0_0_40px_rgba(56,189,248,0.25)] text-center relative overflow-hidden">
+            <div class="w-16 h-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-sky-500/25 to-amber-500/25 border border-amber-400/50 flex items-center justify-center text-3xl shadow-inner">
+                🎓
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-300 text-xs font-bold mb-2">
+                <span>خوش آمدید دانش‌پژوه عزیز!</span>
+            </div>
+            <h2 class="text-base sm:text-lg font-black text-white mb-2">
+                آیا آماده شروع راهنمای گام‌به‌گام آزمایشگاه هستید؟
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-5">
+                در این آزمایشگاه می‌توانید <strong class="text-amber-300">۴۰ مدل اتم خنثی و یون</strong> از عنصرهای ۱ تا ۱۸ کتاب علوم نهم را بسازید و کاپ‌های افتخار دریافت کنید. آیا مایلید ابتدا یک راهنمای کوتاه ۵ مرحله‌ای بخش‌های برنامه را به شما معرفی کند؟
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2.5">
+                <button id="btnConfirmStartTour" type="button" class="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-sky-500 via-indigo-500 to-purple-600 hover:from-sky-400 hover:to-purple-500 text-white font-black text-xs sm:text-sm shadow-lg shadow-sky-500/25 transition transform active:scale-95 cursor-pointer">
+                    بله، آماده‌ام! شروع راهنما 🚀
+                </button>
+                <button id="btnDeclineStartTour" type="button" class="py-3 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-bold text-xs sm:text-sm transition cursor-pointer">
+                    ورود مستقیم به آزمایشگاه
+                </button>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-3">
+                هر زمان که بخواهید می‌توانید از تب «تنظیمات» در منوی پایین، راهنما را دوباره اجرا کنید.
+            </p>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 4. STEP-BY-STEP ONBOARDING TOUR OVERLAY                             -->
+    <!-- =================================================================== -->
+    <div id="onboardingBackdrop" class="fixed inset-0 z-[60] tour-backdrop-dim pointer-events-none hidden transition-opacity duration-300"></div>
+    <div id="onboardingCardWrapper" class="fixed tour-card-bottom left-1/2 -translate-x-1/2 z-[75] w-[95%] max-w-lg hidden transition-all duration-300">
+        <div class="bg-slate-900/95 backdrop-blur-2xl border-2 border-amber-400 rounded-3xl p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.92),0_0_30px_rgba(56,189,248,0.4)] text-right">
+            <div class="flex items-center justify-between gap-1.5 flex-wrap mb-2.5">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-400/20 border border-amber-400/50 text-amber-300 text-[11px] sm:text-xs font-extrabold">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span id="tourStepBadge">گام ۱ از ۵ — راهنمای آزمایشگاه</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <button id="btnTourFlipPos" type="button" title="جابجایی کادر راهنما بین بالا و پایین صفحه" class="px-2 py-1 rounded-lg text-[11px] font-bold bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-400/40 transition cursor-pointer">
+                        جابجایی کادر ⇅
+                    </button>
+                    <button id="btnTourSkip" type="button" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-800 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300 border border-slate-700 transition cursor-pointer">
+                        بستن ✕
+                    </button>
+                </div>
+            </div>
+            <h3 id="tourStepTitle" class="text-sm sm:text-base font-black text-white mb-1.5">عنوان گام</h3>
+            <p id="tourStepDesc" class="text-xs sm:text-sm text-slate-200 leading-relaxed mb-3.5">توضیحات گام...</p>
+            <div class="flex items-center justify-between gap-2 pt-2.5 border-t border-slate-800">
+                <button id="btnTourPrev" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition cursor-pointer disabled:opacity-40 disabled:pointer-events-none">
+                    ➡ مرحله قبل
+                </button>
+                <div id="tourDotsContainer" class="flex items-center gap-1" dir="ltr"></div>
+                <button id="btnTourNext" type="button" class="px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-lg transition transform active:scale-95 cursor-pointer">
+                    <span id="btnTourNextText">مرحله بعد ⬅</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 5. FLOATING SCIENTIFIC ERROR / ACHIEVEMENT POPUP TOAST              -->
+    <!-- =================================================================== -->
+    <div id="validationToast" class="fixed top-14 sm:top-16 left-1/2 -translate-x-1/2 w-[94%] max-w-lg z-[80] transform -translate-y-10 opacity-0 pointer-events-none transition-all duration-300 ease-out">
+        <div id="validationToastBox" class="bg-slate-900/95 backdrop-blur-2xl border-2 border-amber-400/80 text-slate-100 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden">
+            <div class="p-3.5 sm:p-4 flex items-start gap-3">
+                <div id="validationToastIcon" class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/50 flex items-center justify-center shrink-0 mt-0.5 text-amber-400 font-black text-lg">
+                    !
+                </div>
+                <div class="flex-1 text-xs sm:text-sm leading-relaxed">
+                    <div class="flex items-center justify-between gap-2 mb-1">
+                        <p class="font-black text-amber-300 text-xs sm:text-sm" id="validationToastTitle">پیام آزمایشگاه</p>
+                        <span id="validationToastBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold shrink-0">قانون شیمی نهم</span>
+                    </div>
+                    <p id="validationToastMsg" class="text-slate-200 font-medium leading-relaxed">توضیح علمی...</p>
+                </div>
+                <button id="btnCloseToast" type="button" class="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer shrink-0">✕</button>
+            </div>
+            <div class="w-full h-1.5 bg-slate-950">
+                <div id="validationToastBar" class="h-full bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- 6. MULTI-TAB MAIN WORKSPACE                                         -->
+    <!-- =================================================================== -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-5">
+
+        <!-- =============================================================== -->
+        <!-- TAB 1: LABORATORY (آزمایشگاه - اولویت اول: مدل اتمی بور)          -->
+        <!-- =============================================================== -->
+        <div id="tab-lab" class="tab-panel active space-y-6">
+
+            <!-- FIRST & TOP PRIORITY: Bohr Atomic Model + Controls & Metrics -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+                <!-- Left Column: SVG Bohr Visualizer (Strictly NO Nucleus) -->
+                <div id="tour-step-bohr" class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl flex flex-col items-center relative overflow-hidden">
+                    <div id="visualizerGlow" class="w-64 h-64 rounded-full bg-indigo-500/15 blur-3xl absolute -top-10 pointer-events-none transition-colors duration-500"></div>
+
+                    <div class="w-full flex items-center justify-between gap-2 z-10 mb-2">
+                        <div class="flex items-center gap-1.5 flex-wrap">
+                            <span id="particleTypeBadge" class="px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40">اتم خنثی</span>
+                            <span id="stabilityBadge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">ناپایدار</span>
+                        </div>
+                        <div id="chemNotationLiveBadge" dir="ltr" class="px-3.5 py-1 rounded-2xl bg-slate-950/90 border border-slate-700/80 shadow-inner flex items-center justify-center min-w-[86px] text-2xl text-white"></div>
+                    </div>
+
+                    <!-- Interactive SVG Bohr Model (No Nucleus) -->
+                    <div class="relative w-full max-w-[300px] aspect-square flex items-center justify-center my-1">
+                        <svg id="bohrSvg" viewBox="0 0 360 360" class="w-full h-full select-none overflow-visible">
+                            <defs>
+                                <radialGradient id="electronGradInner" cx="35%" cy="35%" r="65%">
+                                    <stop offset="0%" stop-color="#bae6fd"/>
+                                    <stop offset="60%" stop-color="#38bdf8"/>
+                                    <stop offset="100%" stop-color="#0284c7"/>
+                                </radialGradient>
+                                <radialGradient id="electronGradValence" cx="35%" cy="35%" r="65%">
+                                    <stop offset="0%" stop-color="#fef08a"/>
+                                    <stop offset="60%" stop-color="#facc15"/>
+                                    <stop offset="100%" stop-color="#ca8a04"/>
+                                </radialGradient>
+                            </defs>
+                            <line x1="180" y1="22" x2="180" y2="338" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 5" />
+                            <line x1="22" y1="180" x2="338" y2="180" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 5" />
+                            <g id="svgShellsGroup"></g>
+                            <g id="svgElectronsGroup"></g>
+                            <g id="svgCenterWatermark" class="pointer-events-none">
+                                <foreignObject x="125" y="158" width="110" height="44">
+                                    <div xmlns="http://www.w3.org/1999/xhtml" id="svgCenterHtml" dir="ltr" class="w-full h-full flex items-center justify-center text-slate-400/45 text-base font-extrabold select-none"></div>
+                                </foreignObject>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Legend & 3-Line Uniform Shell Capacity Boxes -->
+                    <div class="w-full space-y-2.5 mt-2 z-10">
+                        <div class="flex items-center justify-center gap-4 text-xs bg-slate-950/60 py-2 px-3 rounded-xl border border-slate-800/80">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-yellow-400 inline-block shadow-[0_0_8px_#facc15]"></span>
+                                <span class="text-slate-300">الکترون مدار آخر (ظرفیت)</span>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-sky-400 inline-block shadow-[0_0_8px_#38bdf8]"></span>
+                                <span class="text-slate-300">الکترون لایه‌های درونی</span>
+                            </div>
+                        </div>
+
+                        <!-- Uniform 3-Line Shell Boxes (No line-wrap on mobile) -->
+                        <div class="grid grid-cols-3 gap-2 text-center items-stretch">
+                            <div id="shellCard1" class="bg-slate-800/70 border border-slate-700 rounded-xl p-2.5 flex flex-col items-center justify-between gap-1 transition">
+                                <span class="text-xs font-bold text-slate-300 whitespace-nowrap">مدار اول</span>
+                                <span id="shellVal1" class="text-sm sm:text-base font-extrabold text-white whitespace-nowrap my-0.5">۲ الکترون</span>
+                                <span class="text-[10px] font-medium text-slate-400 bg-slate-950/60 px-2 py-0.5 rounded-md border border-slate-800 whitespace-nowrap">ظرفیت: ۲</span>
+                            </div>
+                            <div id="shellCard2" class="bg-slate-800/70 border border-slate-700 rounded-xl p-2.5 flex flex-col items-center justify-between gap-1 transition">
+                                <span class="text-xs font-bold text-slate-300 whitespace-nowrap">مدار دوم</span>
+                                <span id="shellVal2" class="text-sm sm:text-base font-extrabold text-white whitespace-nowrap my-0.5">۸ الکترون</span>
+                                <span class="text-[10px] font-medium text-slate-400 bg-slate-950/60 px-2 py-0.5 rounded-md border border-slate-800 whitespace-nowrap">ظرفیت: ۸</span>
+                            </div>
+                            <div id="shellCard3" class="bg-slate-800/70 border border-slate-700 rounded-xl p-2.5 flex flex-col items-center justify-between gap-1 transition">
+                                <span class="text-xs font-bold text-slate-300 whitespace-nowrap">مدار سوم</span>
+                                <span id="shellVal3" class="text-sm sm:text-base font-extrabold text-white whitespace-nowrap my-0.5">۱ الکترون</span>
+                                <span class="text-[10px] font-medium text-slate-400 bg-slate-950/60 px-2 py-0.5 rounded-md border border-slate-800 whitespace-nowrap">ظرفیت: ۸</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-sky-950/40 border border-sky-800/50 rounded-xl px-3 py-2 text-[11px] text-sky-200/90 leading-relaxed">
+                            <strong>قرارداد کتاب علوم نهم (صفحه ۵ و ۱۸):</strong> در رسم مدل اتمی بور، هسته اتم (پروتون‌ها و نوترون‌ها) نمایش داده نمی‌شود و فقط مدارهای الکترونی رسم می‌شوند.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Controls, Metrics & Educational Message -->
+                <div class="lg:col-span-7 space-y-4">
+
+                    <!-- Proton & Electron Controls -->
+                    <div id="tour-step-controls" class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
+                        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-800 pb-3">
+                            <h2 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+                                پنل تغییر تعداد پروتون‌ها و الکترون‌ها
+                            </h2>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <button id="btnMakeNeutral" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 transition active:scale-95 cursor-pointer">
+                                    خنثی‌سازی اتم (الکترون = پروتون)
+                                </button>
+                                <button id="btnMakeStableIon" type="button" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition active:scale-95 cursor-pointer">
+                                    تبدیل به یون پایدار کتاب درسی
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Protons Control -->
+                        <div id="protonControlBox" class="bg-slate-950/70 border border-slate-800/90 rounded-2xl p-3.5 transition">
+                            <div class="flex items-center justify-between flex-wrap gap-2 mb-2.5">
+                                <div>
+                                    <label for="inputProtons" class="text-sm font-extrabold text-rose-400 flex items-center gap-1.5 flex-wrap">
+                                        <span>تعداد پروتون‌ها (عدد اتمی Z)</span>
+                                        <span class="text-[11px] px-2 py-0.5 rounded-md bg-rose-500/15 text-rose-300 border border-rose-500/30">عنصر ۱ تا ۱۸</span>
+                                    </label>
+                                    <p class="text-xs text-slate-400 mt-0.5">تغییر پروتون، نوع عنصر را تغییر می‌دهد.</p>
+                                </div>
+                                <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-2xl border border-slate-700">
+                                    <button id="btnProtonDec" type="button" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-rose-600/30 text-white font-black text-lg flex items-center justify-center transition active:scale-90 cursor-pointer">−</button>
+                                    <input id="inputProtons" type="text" inputmode="numeric" value="۱۱" class="w-14 h-10 text-center bg-slate-950 text-white font-black text-base rounded-xl border border-slate-700 focus:border-rose-400 focus:outline-none" />
+                                    <button id="btnProtonInc" type="button" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-rose-600/30 text-white font-black text-lg flex items-center justify-center transition active:scale-90 cursor-pointer">+</button>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-bold text-slate-400">۱</span>
+                                <input id="sliderProtons" type="range" min="1" max="18" value="11" class="w-full accent-rose-500 h-2 bg-slate-800 rounded-lg cursor-pointer" />
+                                <span class="text-xs font-bold text-slate-400">۱۸</span>
+                            </div>
+                        </div>
+
+                        <!-- Electrons Control -->
+                        <div id="electronControlBox" class="bg-slate-950/70 border border-slate-800/90 rounded-2xl p-3.5 transition">
+                            <div class="flex items-center justify-between flex-wrap gap-2 mb-2.5">
+                                <div>
+                                    <label for="inputElectrons" class="text-sm font-extrabold text-sky-400 flex items-center gap-1.5 flex-wrap">
+                                        <span>تعداد الکترون‌ها در مدارها</span>
+                                        <span id="allowedElectronsBadge" class="text-[11px] px-2.5 py-0.5 rounded-md bg-sky-500/15 text-sky-300 border border-sky-500/30">مجاز برای سدیم: ۱۰ تا ۱۱ الکترون</span>
+                                    </label>
+                                    <p class="text-xs text-slate-400 mt-0.5">فقط یون‌های واقعی موجود در طبیعت قابل ساخت هستند.</p>
+                                </div>
+                                <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-2xl border border-slate-700">
+                                    <button id="btnElectronDec" type="button" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-sky-600/30 text-white font-black text-lg flex items-center justify-center transition active:scale-90 cursor-pointer">−</button>
+                                    <input id="inputElectrons" type="text" inputmode="numeric" value="۱۱" class="w-14 h-10 text-center bg-slate-950 text-white font-black text-base rounded-xl border border-slate-700 focus:border-sky-400 focus:outline-none" />
+                                    <button id="btnElectronInc" type="button" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-sky-600/30 text-white font-black text-lg flex items-center justify-center transition active:scale-90 cursor-pointer">+</button>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-bold text-slate-400">۱</span>
+                                <input id="sliderElectrons" type="range" min="1" max="18" value="11" class="w-full accent-sky-400 h-2 bg-slate-800 rounded-lg cursor-pointer" />
+                                <span class="text-xs font-bold text-slate-400">۱۸</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Key Metric Cards -->
+                    <div id="tour-step-stats" class="grid grid-cols-2 sm:grid-cols-4 gap-3 rounded-2xl">
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 shadow-lg">
+                            <span class="text-xs text-slate-400 block mb-1">عنصر شناسایی‌شده</span>
+                            <div class="flex items-baseline justify-between">
+                                <span id="metricElementName" class="text-lg font-black text-white">سدیم</span>
+                                <span id="metricElementSym" dir="ltr" class="text-sm font-bold px-2 py-0.5 rounded-lg bg-sky-500/20 text-sky-300"></span>
+                            </div>
+                            <span id="metricElementCategory" class="text-[11px] text-amber-300 mt-1 block font-medium">فلز (ستون ۱)</span>
+                        </div>
+
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 shadow-lg">
+                            <span class="text-xs text-slate-400 block mb-1">عدد اتمی (پروتون)</span>
+                            <div class="flex items-baseline gap-1.5">
+                                <span id="metricAtomicNumber" class="text-2xl font-black text-sky-400">۱۱</span>
+                                <span class="text-xs text-slate-400">پروتون (+)</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400 mt-1 block">تعیین‌کننده نوع عنصر</span>
+                        </div>
+
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 shadow-lg">
+                            <span class="text-xs text-slate-400 block mb-1">بار الکتریکی ذره</span>
+                            <div class="flex items-baseline justify-between">
+                                <span id="metricChargeVal" dir="ltr" class="text-2xl font-black text-indigo-400">۰</span>
+                                <span id="metricChargeText" class="text-xs font-bold text-indigo-300">خنثی</span>
+                            </div>
+                            <span id="metricChargeFormula" class="text-[11px] text-slate-400 mt-1 block">۱۱ پروتون − ۱۱ الکترون</span>
+                        </div>
+
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 shadow-lg">
+                            <span class="text-xs text-slate-400 block mb-1">الکترون مدار آخر</span>
+                            <div class="flex items-baseline gap-1.5">
+                                <span id="metricValenceCount" class="text-2xl font-black text-yellow-400">۱</span>
+                                <span class="text-xs text-slate-400">در مدار <span id="metricTotalShells">۳</span></span>
+                            </div>
+                            <span id="metricElectronConfig" class="text-[11px] text-slate-300 mt-1 block font-semibold">آرایش: ۲ ، ۸ ، ۱</span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Educational Message Box -->
+                    <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/60 border-2 border-indigo-500/40 rounded-3xl p-4 sm:p-5 shadow-xl">
+                        <div class="flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-400/40 flex items-center justify-center shrink-0 mt-0.5 text-indigo-300 font-black">
+                                💡
+                            </div>
+                            <div class="flex-1 space-y-1.5">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">تحلیل آموزشی لحظه‌ای</span>
+                                    <span id="eduRefPage" class="text-[11px] font-semibold text-slate-400">مرجع: فصل ۱ و ۲ علوم نهم</span>
+                                </div>
+                                <h3 id="eduMessageTitle" class="text-sm sm:text-base font-extrabold text-white"></h3>
+                                <p id="eduMessageBody" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
+                                <div class="pt-2 border-t border-slate-800/80 flex items-start gap-2 text-xs text-amber-200/90">
+                                    <span class="font-extrabold shrink-0 text-amber-400">نکته کتاب درسی:</span>
+                                    <p id="eduTextbookFact" class="leading-relaxed"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Comparison Table: Neutral Atom vs Current Particle -->
+            <section class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-4 pb-3 border-b border-slate-800">
+                    <h2 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+                        <span class="w-2.5 h-5 rounded-full bg-emerald-400"></span>
+                        مقایسه تطبیقی: تفاوت اتم خنثی و وضعیت فعلی ذره (مبحث صفحه ۱۸ کتاب درسی)
+                    </h2>
+                    <span id="ionDiffSummaryBadge" class="text-xs font-bold px-3 py-1 rounded-xl bg-slate-800 text-slate-200 border border-slate-700">
+                        ذره فعلی شما: اتم خنثی
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+                    <div class="lg:col-span-8 overflow-x-auto">
+                        <table class="w-full text-xs sm:text-sm text-right border-collapse">
+                            <thead>
+                                <tr class="bg-slate-950/90 text-slate-300 border-b border-slate-800">
+                                    <th class="py-2.5 px-3 font-bold rounded-tr-xl">مشخصات ذره</th>
+                                    <th class="py-2.5 px-3 font-bold text-center bg-indigo-950/30 text-indigo-300">اتم خنثی (<span id="tblNeutralName">سدیم</span>)</th>
+                                    <th class="py-2.5 px-3 font-bold text-center bg-sky-950/40 text-sky-300">ذره فعلی (<span id="tblCurrentName">اتم سدیم</span>)</th>
+                                    <th class="py-2.5 px-3 font-bold text-center rounded-tl-xl bg-emerald-950/30 text-emerald-300">حالت پایدار عنصر</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/80 bg-slate-950/40">
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-slate-300">نماد شیمیایی استاندارد</td>
+                                    <td id="tblNeutralSym" dir="ltr" class="py-2 px-3 text-center font-black text-base text-white"></td>
+                                    <td id="tblCurrentSym" dir="ltr" class="py-2 px-3 text-center font-black text-base text-sky-400"></td>
+                                    <td id="tblStableSym" dir="ltr" class="py-2 px-3 text-center font-black text-base text-emerald-400"></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-slate-300">تعداد پروتون (عدد اتمی)</td>
+                                    <td id="tblNeutralP" class="py-2 px-3 text-center font-bold text-slate-200">۱۱</td>
+                                    <td id="tblCurrentP" class="py-2 px-3 text-center font-bold text-slate-200">۱۱</td>
+                                    <td id="tblStableP" class="py-2 px-3 text-center font-bold text-slate-200">۱۱</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-slate-300">تعداد کل الکترون‌ها</td>
+                                    <td id="tblNeutralE" class="py-2 px-3 text-center font-bold text-slate-200">۱۱</td>
+                                    <td id="tblCurrentE" class="py-2 px-3 text-center font-extrabold text-sky-300">۱۱</td>
+                                    <td id="tblStableE" class="py-2 px-3 text-center font-bold text-emerald-300">۱۰</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-slate-300">آرایش الکترونی</td>
+                                    <td id="tblNeutralShells" class="py-2 px-3 text-center font-semibold text-slate-300">۲ ، ۸ ، ۱</td>
+                                    <td id="tblCurrentShells" class="py-2 px-3 text-center font-bold text-sky-300">۲ ، ۸ ، ۱</td>
+                                    <td id="tblStableShells" class="py-2 px-3 text-center font-semibold text-emerald-300">۲ ، ۸</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-slate-300">الکترون مدار آخر</td>
+                                    <td id="tblNeutralValence" class="py-2 px-3 text-center font-bold text-amber-300">۱</td>
+                                    <td id="tblCurrentValence" class="py-2 px-3 text-center font-extrabold text-amber-400">۱</td>
+                                    <td id="tblStableValence" class="py-2 px-3 text-center font-bold text-emerald-300">۸</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold text-slate-300">آیا مدار آخر پر شده است؟</td>
+                                    <td id="tblNeutralFull" class="py-2 px-3 text-center font-bold text-rose-400">خیر</td>
+                                    <td id="tblCurrentFull" class="py-2 px-3 text-center font-bold text-rose-400">خیر</td>
+                                    <td id="tblStableFull" class="py-2 px-3 text-center font-bold text-emerald-400">بله (پایدار)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="lg:col-span-4 bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+                        <h3 class="text-xs sm:text-sm font-extrabold text-sky-300">تحلیل تبدیل اتم و یون:</h3>
+                        <p id="ionComparisonAnalysis" class="text-xs text-slate-300 leading-relaxed"></p>
+                        <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1.5 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">تغییر تعداد مدارها:</span>
+                                <span id="ionShellCountDiff" class="font-bold text-white">بدون تغییر</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">مبادله الکترون:</span>
+                                <span id="ionElectronExchange" class="font-bold text-indigo-300">۰ الکترون</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MOVED TO BOTTOM OF LAB TAB: Direct Textbook Presets Station -->
+            <section id="tour-step-presets" class="bg-slate-900/85 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-lg">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-5 rounded-full bg-sky-400"></span>
+                        <h2 class="text-xs sm:text-sm font-extrabold text-slate-200">ایستگاه مثال‌های مستقیم کتاب علوم نهم (انتخاب سریع):</h2>
+                    </div>
+                    <span class="text-[11px] text-slate-400">با لمس هر نمونه، مدل اتمی آن در بالای صفحه ساخته می‌شود</span>
+                </div>
+                <div id="textbookPresetsContainer" class="flex items-center gap-2 flex-wrap"></div>
+            </section>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 2: PERIODIC TABLE (جدول تناوبی ۸ ستونی چپ‌چین)               -->
+        <!-- =============================================================== -->
+        <div id="tab-table" class="tab-panel space-y-5">
+            <section id="tour-step-ptable" class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-extrabold text-white flex items-center gap-2">
+                            <span class="w-2.5 h-6 rounded-full bg-sky-400"></span>
+                            جدول طبقه‌بندی عنصرها (عدد اتمی ۱ تا ۱۸ در ۸ ستون - صفحه ۷ کتاب درسی)
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-1">عنصرهایی که در یک ستون قرار می‌گیرند، تعداد الکترون‌های مدار آخر برابر و خواص شیمیایی مشابهی دارند (به استثنای هلیم با ۲ الکترون در ستون گازهای نجیب).</p>
+                    </div>
+                    <button id="btnJumpToLabFromTable" type="button" class="px-4 py-2 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-xs font-extrabold shadow-md cursor-pointer">
+                        مشاهده مدل اتمی در آزمایشگاه ⬅
+                    </button>
+                </div>
+
+                <!-- Selected Element Quick Preview Bar -->
+                <div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-3.5 mb-4 flex items-center justify-between flex-wrap gap-3">
+                    <div class="flex items-center gap-3">
+                        <div dir="ltr" id="ptSelectedBadge" class="w-14 h-12 rounded-2xl bg-sky-500/20 border border-sky-400/50 flex items-center justify-center text-xl font-black text-white"></div>
+                        <div>
+                            <div class="text-sm sm:text-base font-black text-white" id="ptSelectedTitle">عنصر انتخاب‌شده: سدیم</div>
+                            <div class="text-xs text-slate-400 mt-0.5" id="ptSelectedSub">عدد اتمی: ۱۱ | آرایش الکترونی اتم خنثی: ۲ ، ۸ ، ۱ | فلز (ستون ۱)</div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-amber-300 font-bold">با لمس هر خانه، عنصر در شبیه‌ساز بارگذاری می‌شود</span>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 mb-4 text-xs">
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500/30 border border-rose-400"></span><span class="text-slate-300">فلزها</span></div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-400"></span><span class="text-slate-300">نافلزها</span></div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500/30 border border-amber-400"></span><span class="text-slate-300">شبه‌فلزها</span></div>
+                    <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-purple-500/30 border border-purple-400"></span><span class="text-slate-300">گازهای نجیب (ستون ۸)</span></div>
+                    <span class="text-[11px] text-sky-300 ms-auto font-semibold">جهت جدول تناوبی استاندارد: چپ به راست (LTR)</span>
+                </div>
+
+                <div dir="ltr" class="overflow-x-auto pb-2">
+                    <div id="periodicTableGrid" class="min-w-[650px] grid grid-cols-8 gap-2 sm:gap-2.5 text-left"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 3: SELF-TEST 40 CHALLENGES (خود را بیازمایید - ۴۰ چالش)      -->
+        <!-- =============================================================== -->
+        <div id="tab-quiz" class="tab-panel space-y-5">
+            <section class="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/30 border-2 border-amber-500/40 rounded-3xl p-4 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between flex-wrap gap-3 mb-4 pb-3 border-b border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-amber-500/20 border border-amber-400/50 flex items-center justify-center text-amber-300 font-black text-xl">؟</div>
+                        <div>
+                            <h2 class="text-base sm:text-lg font-extrabold text-white">ایستگاه جامع «خود را بیازمایید» (۴۰ چالش اتم و یون)</h2>
+                            <p class="text-xs text-slate-400">تمام ۴۰ حالت علمی ممکن (۱۸ اتم خنثی، ۹ کاتیون و ۱۳ آنیون) را بسازید و بررسی کنید.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span id="challengeScoreBadge" class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-extrabold">چالش‌های حل‌شده: ۰ از ۴۰</span>
+                    </div>
+                </div>
+
+                <!-- Filter Pills -->
+                <div class="flex items-center gap-2 flex-wrap mb-4">
+                    <button type="button" data-qfilter="all" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 cursor-pointer transition">همه مدل‌ها (۴۰)</button>
+                    <button type="button" data-qfilter="neutral" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer transition">اتم‌های خنثی (۱۸)</button>
+                    <button type="button" data-qfilter="cation" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer transition">کاتیون‌ها - یون مثبت (۹)</button>
+                    <button type="button" data-qfilter="anion" class="qfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer transition">آنیون‌ها - یون منفی (۱۳)</button>
+                </div>
+
+                <!-- Active Challenge Card -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center mb-5">
+                    <div class="lg:col-span-8 bg-slate-950/90 border border-slate-800 rounded-2xl p-4 space-y-2.5">
+                        <div class="flex items-center justify-between text-xs text-amber-400 font-bold flex-wrap gap-2">
+                            <span id="challengeNumberTitle">چالش ۱ از ۴۰</span>
+                            <span id="challengeTopicRef" class="px-2.5 py-0.5 rounded-full bg-slate-900 border border-slate-700 text-sky-300">نوع: اتم خنثی</span>
+                        </div>
+                        <p id="challengePromptText" class="text-sm sm:text-base font-extrabold text-white leading-relaxed"></p>
+                        <div class="pt-1 flex items-center justify-between flex-wrap gap-2 text-xs">
+                            <span class="text-slate-400">ذره فعلی شما در آزمایشگاه: <strong id="quizCurrentLabParticle" class="text-sky-300"></strong></span>
+                        </div>
+                        <p id="challengeFeedbackText" class="text-xs sm:text-sm font-bold text-slate-400 pt-1"></p>
+                    </div>
+
+                    <div class="lg:col-span-4 flex flex-col gap-2.5">
+                        <button id="btnCheckChallenge" type="button" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs sm:text-sm shadow-lg transition active:scale-95 cursor-pointer">
+                            ✅ بررسی ذره ساخته‌شده در آزمایشگاه
+                        </button>
+                        <button id="btnGoBuildInLab" type="button" class="w-full py-2.5 px-4 rounded-2xl bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 border border-sky-500/40 font-extrabold text-xs transition cursor-pointer">
+                            🔬 رفتن به آزمایشگاه برای ساخت این ذره
+                        </button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="btnHintChallenge" type="button" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-bold text-xs transition cursor-pointer">
+                                💡 راهنمایی علمی
+                            </button>
+                            <button id="btnNextChallenge" type="button" class="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs transition cursor-pointer">
+                                چالش بعدی ⬅
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All 40 Challenges Quick Selector Grid -->
+                <div>
+                    <h3 class="text-xs sm:text-sm font-extrabold text-slate-300 mb-2.5">فهرست ۴۰ چالش (برای انتخاب هر چالش روی آن بزنید):</h3>
+                    <div id="quizSelectorGrid" class="grid grid-cols-4 sm:grid-cols-8 md:grid-cols-10 gap-2 max-h-64 overflow-y-auto p-1"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 4: ACHIEVEMENTS & PROGRESSIVE TROPHY CUPS (دستاوردها و کاپ‌ها) -->
+        <!-- =============================================================== -->
+        <div id="tab-achievements" class="tab-panel space-y-6">
+
+            <!-- Progress Hero Card -->
+            <section class="bg-gradient-to-br from-slate-900 via-indigo-950/60 to-slate-900 border-2 border-amber-400/50 rounded-3xl p-5 sm:p-6 shadow-2xl">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-4">
+                    <div class="text-center md:text-right">
+                        <span class="inline-block px-3 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-extrabold mb-2">
+                            تالار افتخارات و کاوشگر اتم — مهدی سلطانی
+                        </span>
+                        <h2 id="achHeadlineText" class="text-lg sm:text-2xl font-black text-white">
+                            شما ۱ مدل از ۴۰ مدل ممکن را ساخته‌اید!
+                        </h2>
+                        <p id="achSubText" class="text-xs sm:text-sm text-slate-300 mt-1">
+                            با تغییر تعداد پروتون و الکترون در آزمایشگاه، مدل‌های جدید کشف کنید تا کاپ‌های بزرگ‌تر برایتان آزاد شوند!
+                        </p>
+                    </div>
+                    <div class="bg-slate-950/90 border border-amber-400/40 rounded-2xl px-5 py-3 text-center shrink-0">
+                        <span class="text-xs text-slate-400 block">درصد تکمیل آزمایشگاه</span>
+                        <span id="achPercentBig" class="text-2xl sm:text-3xl font-black text-amber-400">۳٪</span>
+                    </div>
+                </div>
+
+                <div class="w-full h-4 bg-slate-950 rounded-full overflow-hidden border border-slate-800 p-0.5">
+                    <div id="achProgressBar" class="h-full rounded-full shimmer-progress transition-all duration-500" style="width: 3%;"></div>
+                </div>
+            </section>
+
+            <!-- 5 Progressive Trophy Cups Showcase (Growing in Size!) -->
+            <section class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+                    <h3 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+                        <span class="w-2.5 h-5 rounded-full bg-amber-400"></span>
+                        ویترین کاپ‌های قهرمانی (در ۵، ۱۵، ۲۵، ۳۵ و ۴۰ مدل — از کوچک به بزرگ)
+                    </h3>
+                    <span id="unlockedCupsCountBadge" class="text-xs font-bold px-3 py-1 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                        کاپ‌های دریافت‌شده: ۰ از ۵
+                    </span>
+                </div>
+
+                <div id="trophyCupsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-end"></div>
+            </section>
+
+            <!-- 40-Particle Discovery Album -->
+            <section class="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-xl">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+                    <div>
+                        <h3 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+                            <span class="w-2.5 h-5 rounded-full bg-sky-400"></span>
+                            آلبوم کلکسیون ۴۰ اتم و یون علوم نهم
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">کارت‌های روشن را ساخته‌اید! با زدن روی هر کارت قفل‌شده، راهنمای ساخت آن را ببینید.</p>
+                    </div>
+                </div>
+                <div id="discoveryAlbumGrid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-2.5"></div>
+            </section>
+        </div>
+
+        <!-- =============================================================== -->
+        <!-- TAB 5: COMPREHENSIVE SETTINGS PANEL (پنل جامع تنظیمات)          -->
+        <!-- =============================================================== -->
+        <div id="tab-settings" class="tab-panel space-y-5">
+            <section class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-xl max-w-3xl mx-auto space-y-5">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-sky-500/20 border border-sky-400/40 flex items-center justify-center text-sky-300 text-xl">⚙️</div>
+                        <div>
+                            <h2 class="text-base sm:text-lg font-extrabold text-white">تنظیمات جامع آزمایشگاه و نمایش</h2>
+                            <p class="text-xs text-slate-400">مدیریت صدا، موسیقی متن تقویت‌شده، نحوه نمایش مدارهای الکترونی و راهنما</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Setting 1: Sound Effects -->
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-white">🔊 افکت‌های صوتی آزمایشگاه</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">پخش صدا هنگام تغییر پروتون، الکترون، تشکیل یون پایدار و دریافت کاپ</p>
+                    </div>
+                    <button id="btnSettingToggleSfx" type="button" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition cursor-pointer">
+                        🔊 فعال (روشن)
+                    </button>
+                </div>
+
+                <!-- Setting 2: Ambient Lab Music & Volume -->
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 space-y-3">
+                    <div class="flex items-center justify-between gap-4 flex-wrap">
+                        <div>
+                            <h3 class="text-sm font-extrabold text-white">🎵 موسیقی محیطی آزمایشگاه</h3>
+                            <p class="text-xs text-slate-400 mt-0.5">موسیقی ملایم علمی تقویت‌شده برای اسپیکر موبایل</p>
+                        </div>
+                        <button id="btnSettingToggleMusic" type="button" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-purple-500/25 text-purple-200 border border-purple-400/50 transition cursor-pointer">
+                            🎵 فعال (روشن)
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-3 pt-2 border-t border-slate-800/80">
+                        <span class="text-xs text-slate-400 font-semibold whitespace-nowrap">بلندی صدای موسیقی:</span>
+                        <input id="sliderMusicVolume" type="range" min="10" max="100" value="85" class="w-full accent-purple-500 h-2 bg-slate-800 rounded-lg cursor-pointer" />
+                        <span id="musicVolumeLabel" class="text-xs font-bold text-purple-300 w-10 text-left">۸۵٪</span>
+                    </div>
+                </div>
+
+                <!-- Setting 3: Bohr Orbit Animation Mode -->
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-white">⚛️ حالت نمایش الکترون‌ها در مدار بور</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">انتخاب بین آرایش جفت‌شده کتاب درسی یا چرخش مداری متحرک</p>
+                    </div>
+                    <button id="btnSettingToggleOrbitMode" type="button" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/40 transition cursor-pointer">
+                        حالت کتاب درسی (جفت‌شده چهارجهته)
+                    </button>
+                </div>
+
+                <!-- Setting 4: Center Watermark Symbol -->
+                <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-white">🔤 نمایش نماد کمرنگ عنصر در مرکز مدارها</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">هسته رسم نمی‌شود؛ فقط نماد شیمیایی به صورت کمرنگ در مرکز نمایش داده شود</p>
+                    </div>
+                    <button id="btnSettingToggleWatermark" type="button" class="px-4 py-2.5 rounded-xl text-xs font-extrabold bg-sky-500/20 text-sky-300 border border-sky-500/40 transition cursor-pointer">
+                        نمایش داده شود
+                    </button>
+                </div>
+
+                <!-- Setting 5: Interactive Tour & Splash Screen -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    <button id="btnSettingStartTour" type="button" class="py-3 px-4 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-extrabold text-xs sm:text-sm shadow-lg transition cursor-pointer flex items-center justify-center gap-2">
+                        <span>🎓 اجرای راهنمای گام‌به‌گام آزمایشگاه</span>
+                    </button>
+                    <button id="btnSettingShowSplash" type="button" class="py-3 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-400/40 font-extrabold text-xs sm:text-sm transition cursor-pointer flex items-center justify-center gap-2">
+                        <span>✨ نمایش صفحه لودینگ «مهدی سلطانی»</span>
+                    </button>
+                </div>
+
+                <!-- Setting 6: Reset Progress (With Inline Confirmation) -->
+                <div class="bg-rose-950/20 border border-rose-500/30 rounded-2xl p-4 flex items-center justify-between gap-4 flex-wrap">
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-extrabold text-rose-300">بازنشانی پیشرفت و دستاوردها</h3>
+                        <p class="text-[11px] text-slate-400 mt-0.5">صفر کردن شمارنده ۴۰ مدل ساخته‌شده و کاپ‌های دریافتی</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button id="btnResetProgressAsk" type="button" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 transition cursor-pointer">
+                            پاک‌سازی پیشرفت
+                        </button>
+                        <button id="btnResetProgressConfirm" type="button" class="hidden px-3.5 py-2 rounded-xl text-xs font-black bg-rose-600 text-white transition cursor-pointer">
+                            تأیید نهایی حذف؟
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- =================================================================== -->
+    <!-- 7. LIQUID GLASS BOTTOM NAVIGATION BAR (منوی لیکوئید گلس پایین صفحه) -->
+    <!-- =================================================================== -->
+    <nav id="tour-step-dock" aria-label="منوی اصلی آزمایشگاه" class="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-xl liquid-glass-dock rounded-3xl p-1.5 sm:p-2">
+        <div class="grid grid-cols-5 gap-1 sm:gap-1.5 items-center">
+            <button type="button" data-tab="tab-lab" class="dock-btn active rounded-2xl py-2 px-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-pointer">
+                <svg class="dock-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <circle cx="12" cy="12" r="9" stroke-dasharray="4 2"/>
+                    <circle cx="12" cy="12" r="4"/>
+                </svg>
+                <span class="text-[10px] sm:text-xs font-extrabold whitespace-nowrap">آزمایشگاه</span>
+            </button>
+
+            <button type="button" data-tab="tab-table" class="dock-btn rounded-2xl py-2 px-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-pointer">
+                <svg class="dock-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                </svg>
+                <span class="text-[10px] sm:text-xs font-extrabold whitespace-nowrap">جدول تناوبی</span>
+            </button>
+
+            <button type="button" data-tab="tab-quiz" class="dock-btn rounded-2xl py-2 px-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-pointer">
+                <svg class="dock-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-[10px] sm:text-xs font-extrabold whitespace-nowrap">خودآزمایی</span>
+            </button>
+
+            <button type="button" data-tab="tab-achievements" class="dock-btn rounded-2xl py-2 px-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-pointer relative">
+                <span id="dockAchBadge" class="absolute top-1 left-2 px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 text-[9px] font-black">۱</span>
+                <svg class="dock-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                </svg>
+                <span class="text-[10px] sm:text-xs font-extrabold whitespace-nowrap">دستاوردها</span>
+            </button>
+
+            <button type="button" data-tab="tab-settings" class="dock-btn rounded-2xl py-2 px-1 flex flex-col items-center justify-center gap-1 text-slate-300 cursor-pointer">
+                <svg class="dock-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span class="text-[10px] sm:text-xs font-extrabold whitespace-nowrap">تنظیمات</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- =================================================================== -->
+    <!-- MAIN APPLICATION LOGIC                                              -->
+    <!-- =================================================================== -->
+    <script>
+        (function () {
+            'use strict';
+
+            // Safe localStorage wrapper for Android content:// or file:// URLs
+            var safeStorage = {
+                _mem: {},
+                getItem: function (k) {
+                    try { return window.localStorage.getItem(k); }
+                    catch (e) { return Object.prototype.hasOwnProperty.call(this._mem, k) ? this._mem[k] : null; }
+                },
+                setItem: function (k, v) {
+                    try { window.localStorage.setItem(k, String(v)); }
+                    catch (e) { this._mem[k] = String(v); }
+                }
+            };
+
+            // Persian & English Digit Helpers
+            function toPersianNum(val) {
+                if (val === null || val === undefined) return '';
+                var p = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+                return String(val).replace(/[0-9]/g, function (d) { return p[+d]; });
+            }
+
+            function toEnglishDigits(str) {
+                if (!str) return '';
+                return String(str)
+                    .replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); })
+                    .replace(/[٠-٩]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(d); });
+            }
+
+            function setText(id, text) {
+                var el = document.getElementById(id);
+                if (el) el.textContent = text;
+            }
+
+            function setHtml(id, htmlStr) {
+                var el = document.getElementById(id);
+                if (el) el.innerHTML = htmlStr;
+            }
+
+            // Dedicated Strict Scientific Chemical Symbol Formatter (dir="ltr")
+            // Subscript atomic number on bottom-left, Superscript charge on top-right
+            function renderChemSymbol(z, symbol, charge, subColorClass, supColorClass) {
+                var subHtml = '';
+                if (z !== undefined && z !== null && z !== '') {
+                    subHtml = '<sub class="chem-sub ' + (subColorClass || '') + '">' + toPersianNum(z) + '</sub>';
+                }
+                var supHtml = '';
+                if (charge !== undefined && charge !== null && charge !== 0 && charge !== '') {
+                    var absC = Math.abs(charge);
+                    var sign = charge > 0 ? '+' : '−';
+                    var chargeText = (absC > 1 ? toPersianNum(absC) : '') + sign;
+                    supHtml = '<sup class="chem-sup ' + (supColorClass || '') + '">' + chargeText + '</sup>';
+                }
+                return '<span class="chem-badge" dir="ltr">' + subHtml + '<span class="chem-el">' + symbol + '</span>' + supHtml + '</span>';
+            }
+
+            function renderFormula(formulaHtml) {
+                return '<span class="chem-formula" dir="ltr">' + formulaHtml + '</span>';
+            }
+
+            function formatChargeDisplay(charge) {
+                if (charge === 0) return '۰';
+                var abs = toPersianNum(Math.abs(charge));
+                var sign = charge > 0 ? '+' : '−';
+                return abs + sign;
+            }
+
+            // =========================================================================
+            // 1. WEB AUDIO API SOUND ENGINE (DEFAULT ON + BOOSTED MOBILE VOLUME)
+            // =========================================================================
+            var LabSoundEngine = (function () {
+                var ctx = null;
+                var masterOut = null;
+                var sfxEnabled = safeStorage.getItem('ms9_sfx_v4') !== 'off';
+                var musicEnabled = safeStorage.getItem('ms9_music_v4') !== 'off';
+                var musicVol = parseInt(safeStorage.getItem('ms9_mvol_v4') || '85', 10);
+                var musicTimer = null;
+                var musicStep = 0;
+
+                function getCtx() {
+                    try {
+                        if (!ctx) {
+                            var AudioCtx = window.AudioContext || window.webkitAudioContext;
+                            if (AudioCtx) {
+                                ctx = new AudioCtx();
+                                var comp = ctx.createDynamicsCompressor();
+                                comp.threshold.setValueAtTime(-22, ctx.currentTime);
+                                comp.knee.setValueAtTime(16, ctx.currentTime);
+                                comp.ratio.setValueAtTime(4, ctx.currentTime);
+                                comp.attack.setValueAtTime(0.005, ctx.currentTime);
+                                comp.release.setValueAtTime(0.18, ctx.currentTime);
+
+                                var boost = ctx.createGain();
+                                boost.gain.setValueAtTime(1.65, ctx.currentTime);
+                                comp.connect(boost);
+                                boost.connect(ctx.destination);
+                                masterOut = comp;
+                            }
+                        }
+                        if (ctx && ctx.state === 'suspended') {
+                            ctx.resume();
+                        }
+                    } catch (e) {}
+                    return ctx;
+                }
+
+                function getDestination() {
+                    var c = getCtx();
+                    return masterOut || (c ? c.destination : null);
+                }
+
+                function unlock() {
+                    var c = getCtx();
+                    if (c && musicEnabled && !musicTimer) {
+                        startAmbientLoop();
+                    }
+                }
+
+                function playTone(freq, type, duration, vol, slideToFreq, delaySec) {
+                    if (!sfxEnabled) return;
+                    var c = getCtx();
+                    var dest = getDestination();
+                    if (!c || !dest) return;
+                    try {
+                        var now = c.currentTime + (delaySec || 0);
+                        var osc = c.createOscillator();
+                        var gain = c.createGain();
+                        osc.type = type || 'sine';
+                        osc.frequency.setValueAtTime(Math.max(40, freq), now);
+                        if (slideToFreq) {
+                            osc.frequency.exponentialRampToValueAtTime(Math.max(40, slideToFreq), now + duration);
+                        }
+                        var peakVol = Math.min(0.48, (vol || 0.16) * 1.5);
+                        gain.gain.setValueAtTime(0.0001, now);
+                        gain.gain.exponentialRampToValueAtTime(peakVol, now + 0.015);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+                        osc.connect(gain);
+                        gain.connect(dest);
+                        osc.start(now);
+                        osc.stop(now + duration + 0.02);
+                    } catch (e) {}
+                }
+
+                function playLabStart() {
+                    var notes = [261.63, 329.63, 392.00, 523.25];
+                    notes.forEach(function (n, idx) {
+                        playTone(n, 'triangle', 0.24, 0.16, n * 1.02, idx * 0.06);
+                    });
+                }
+
+                function playProtonChange(dir, z) {
+                    var base = 180 + (z || 11) * 15;
+                    if (dir > 0) playTone(base, 'triangle', 0.14, 0.18, base * 1.28, 0);
+                    else playTone(base * 1.2, 'triangle', 0.14, 0.18, base * 0.85, 0);
+                }
+
+                function playElectronAdd(eCount) {
+                    var base = 360 + (eCount || 10) * 20;
+                    playTone(base, 'sine', 0.12, 0.16, base * 1.35, 0);
+                }
+
+                function playElectronRemove(eCount) {
+                    var base = 380 + (eCount || 10) * 18;
+                    playTone(base * 1.25, 'sine', 0.12, 0.16, base * 0.8, 0);
+                }
+
+                function playStableIon() {
+                    var chord = [523.25, 659.25, 783.99, 1046.50];
+                    chord.forEach(function (f, i) {
+                        playTone(f, 'triangle', 0.3, 0.17, f * 1.01, i * 0.055);
+                    });
+                }
+
+                function playTrophyUnlock() {
+                    var notes = [392.00, 523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach(function (f, i) {
+                        playTone(f, 'triangle', 0.36, 0.22, f * 1.03, i * 0.075);
+                    });
+                }
+
+                function playScientificError() {
+                    playTone(210, 'sawtooth', 0.16, 0.16, 160, 0);
+                    playTone(155, 'sawtooth', 0.22, 0.16, 120, 0.14);
+                }
+
+                function playElementSelect(z) {
+                    var freq = 300 + (z || 1) * 22;
+                    playTone(freq, 'triangle', 0.14, 0.16, freq * 1.12, 0);
+                }
+
+                function playUiSwitch() {
+                    playTone(580, 'triangle', 0.08, 0.14, 740, 0);
+                }
+
+                function playTourStep(idx) {
+                    var f = 420 + (idx || 0) * 45;
+                    playTone(f, 'triangle', 0.14, 0.16, f * 1.18, 0);
+                }
+
+                function playChallengeSuccess() {
+                    var fanfare = [523.25, 659.25, 783.99, 1046.50];
+                    fanfare.forEach(function (n, i) {
+                        playTone(n, 'triangle', 0.28, 0.19, n * 1.02, i * 0.065);
+                    });
+                }
+
+                function playChallengeFail() {
+                    playTone(270, 'triangle', 0.15, 0.16, 220, 0);
+                    playTone(210, 'triangle', 0.2, 0.16, 175, 0.14);
+                }
+
+                // Warm, clear, mobile-friendly melodic arpeggio (Am9 -> Fmaj7 -> Cmaj7 -> G6)
+                var MELODY_SEQUENCE = [
+                    { lead: 440.00, bass: 220.00, chime: 659.25 },
+                    { lead: 523.25, bass: 0,      chime: 0      },
+                    { lead: 659.25, bass: 0,      chime: 987.77 },
+                    { lead: 587.33, bass: 0,      chime: 0      },
+                    { lead: 349.23, bass: 174.61, chime: 523.25 },
+                    { lead: 440.00, bass: 0,      chime: 0      },
+                    { lead: 523.25, bass: 0,      chime: 659.25 },
+                    { lead: 659.25, bass: 0,      chime: 0      },
+                    { lead: 523.25, bass: 261.63, chime: 783.99 },
+                    { lead: 587.33, bass: 0,      chime: 0      },
+                    { lead: 659.25, bass: 0,      chime: 1046.5 },
+                    { lead: 523.25, bass: 0,      chime: 0      },
+                    { lead: 392.00, bass: 196.00, chime: 587.33 },
+                    { lead: 493.88, bass: 0,      chime: 0      },
+                    { lead: 587.33, bass: 0,      chime: 783.99 },
+                    { lead: 493.88, bass: 0,      chime: 0      }
+                ];
+
+                function startAmbientLoop() {
+                    stopAmbientLoop();
+                    if (!musicEnabled) return;
+                    getCtx();
+                    musicTimer = setInterval(function () {
+                        if (!musicEnabled) return;
+                        var c = getCtx();
+                        var dest = getDestination();
+                        if (!c || !dest) return;
+                        try {
+                            var stepObj = MELODY_SEQUENCE[musicStep % MELODY_SEQUENCE.length];
+                            musicStep++;
+                            var now = c.currentTime;
+                            var volScale = Math.max(0.05, musicVol / 100);
+
+                            var leadOsc = c.createOscillator();
+                            var leadGain = c.createGain();
+                            leadOsc.type = 'triangle';
+                            leadOsc.frequency.setValueAtTime(stepObj.lead, now);
+                            var leadPeak = volScale * 0.25;
+                            leadGain.gain.setValueAtTime(0.0001, now);
+                            leadGain.gain.exponentialRampToValueAtTime(leadPeak, now + 0.04);
+                            leadGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.52);
+                            leadOsc.connect(leadGain);
+                            leadGain.connect(dest);
+                            leadOsc.start(now);
+                            leadOsc.stop(now + 0.55);
+
+                            if (stepObj.bass > 0) {
+                                var bassOsc = c.createOscillator();
+                                var bassGain = c.createGain();
+                                bassOsc.type = 'triangle';
+                                bassOsc.frequency.setValueAtTime(stepObj.bass, now);
+                                var bassPeak = volScale * 0.21;
+                                bassGain.gain.setValueAtTime(0.0001, now);
+                                bassGain.gain.exponentialRampToValueAtTime(bassPeak, now + 0.06);
+                                bassGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.45);
+                                bassOsc.connect(bassGain);
+                                bassGain.connect(dest);
+                                bassOsc.start(now);
+                                bassOsc.stop(now + 1.5);
+                            }
+
+                            if (stepObj.chime > 0) {
+                                var chimeOsc = c.createOscillator();
+                                var chimeGain = c.createGain();
+                                chimeOsc.type = 'sine';
+                                chimeOsc.frequency.setValueAtTime(stepObj.chime, now + 0.02);
+                                var chimePeak = volScale * 0.13;
+                                chimeGain.gain.setValueAtTime(0.0001, now + 0.02);
+                                chimeGain.gain.exponentialRampToValueAtTime(chimePeak, now + 0.05);
+                                chimeGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.75);
+                                chimeOsc.connect(chimeGain);
+                                chimeGain.connect(dest);
+                                chimeOsc.start(now + 0.02);
+                                chimeOsc.stop(now + 0.8);
+                            }
+                        } catch (e) {}
+                    }, 420);
+                }
+
+                function stopAmbientLoop() {
+                    if (musicTimer) {
+                        clearInterval(musicTimer);
+                        musicTimer = null;
+                    }
+                }
+
+                function updateSettingsUI() {
+                    var btnSfx = document.getElementById('btnSettingToggleSfx');
+                    var btnMusic = document.getElementById('btnSettingToggleMusic');
+                    var sliderVol = document.getElementById('sliderMusicVolume');
+                    var lblVol = document.getElementById('musicVolumeLabel');
+                    if (btnSfx) {
+                        btnSfx.textContent = sfxEnabled ? '🔊 فعال (روشن)' : '🔇 غیرفعال (خاموش)';
+                        btnSfx.className = sfxEnabled
+                            ? 'px-4 py-2.5 rounded-xl text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition cursor-pointer'
+                            : 'px-4 py-2.5 rounded-xl text-xs font-extrabold bg-slate-800 text-slate-400 border border-slate-700 transition cursor-pointer';
+                    }
+                    if (btnMusic) {
+                        btnMusic.textContent = musicEnabled ? '🎵 فعال (روشن)' : '🔇 غیرفعال (خاموش)';
+                        btnMusic.className = musicEnabled
+                            ? 'px-4 py-2.5 rounded-xl text-xs font-extrabold bg-purple-500/25 text-purple-200 border border-purple-400/50 transition cursor-pointer'
+                            : 'px-4 py-2.5 rounded-xl text-xs font-extrabold bg-slate-800 text-slate-400 border border-slate-700 transition cursor-pointer';
+                    }
+                    if (sliderVol) sliderVol.value = String(musicVol);
+                    if (lblVol) lblVol.textContent = toPersianNum(musicVol) + '٪';
+                }
+
+                function toggleSfx() {
+                    sfxEnabled = !sfxEnabled;
+                    safeStorage.setItem('ms9_sfx_v4', sfxEnabled ? 'on' : 'off');
+                    updateSettingsUI();
+                    if (sfxEnabled) playUiSwitch();
+                }
+
+                function toggleMusic() {
+                    musicEnabled = !musicEnabled;
+                    safeStorage.setItem('ms9_music_v4', musicEnabled ? 'on' : 'off');
+                    updateSettingsUI();
+                    if (musicEnabled) {
+                        startAmbientLoop();
+                        playUiSwitch();
+                    } else {
+                        stopAmbientLoop();
+                    }
+                }
+
+                function setVolume(val) {
+                    musicVol = Math.max(10, Math.min(100, parseInt(val, 10) || 85));
+                    safeStorage.setItem('ms9_mvol_v4', String(musicVol));
+                    updateSettingsUI();
+                }
+
+                return {
+                    unlock: unlock,
+                    playLabStart: playLabStart,
+                    playProtonChange: playProtonChange,
+                    playElectronAdd: playElectronAdd,
+                    playElectronRemove: playElectronRemove,
+                    playStableIon: playStableIon,
+                    playTrophyUnlock: playTrophyUnlock,
+                    playScientificError: playScientificError,
+                    playElementSelect: playElementSelect,
+                    playUiSwitch: playUiSwitch,
+                    playTourStep: playTourStep,
+                    playChallengeSuccess: playChallengeSuccess,
+                    playChallengeFail: playChallengeFail,
+                    toggleSfx: toggleSfx,
+                    toggleMusic: toggleMusic,
+                    setVolume: setVolume,
+                    updateSettingsUI: updateSettingsUI
+                };
+            })();
+
+            // =========================================================================
+            // 2. SCIENTIFIC ELEMENT DATABASE (Z = 1..18) & ALL 40 VALID MODELS
+            // =========================================================================
+            var ELEMENTS = {
+                1: { z: 1, symbol: 'H', name: 'هیدروژن', row: 1, col: 1, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۱)', minE: 1, maxE: 2, allowedLabel: 'مجاز برای هیدروژن: ۱ تا ۲ الکترون (' + renderChemSymbol(1, 'H', 0) + ' و ' + renderChemSymbol(1, 'H', -1) + ')', stableElectrons: 2, stableDesc: 'پایداری دوتایی (مشابه هلیم)', pageRef: 'صفحه ۴، ۸ و ۲۳ علوم نهم', fact: 'هیدروژن (' + renderChemSymbol(1, 'H', 0) + ') در ساختار آب (' + renderFormula('H<sub>2</sub>O') + ')، سولفوریک اسید (' + renderFormula('H<sub>2</sub>SO<sub>4</sub>') + ')، آمونیاک (' + renderFormula('NH<sub>3</sub>') + ') و هیدروکربن‌ها شرکت دارد.' },
+                2: { z: 2, symbol: 'He', name: 'هلیم', row: 1, col: 8, category: 'noble', categoryLabel: 'گاز نجیب (ستون ۸)', minE: 2, maxE: 2, allowedLabel: 'فقط ۲ الکترون (گاز نجیب یون تشکیل نمی‌دهد)', stableElectrons: 2, stableDesc: 'اتم خنثی پایدار (مدار اول با ۲ الکترون پر است)', pageRef: 'صفحه ۷ و ۱۱۱ علوم نهم', fact: 'هلیم (' + renderChemSymbol(2, 'He', 0) + ') با داشتن ۲ الکترون در تنها مدار خود، مداری کاملاً پر و پایدار دارد و در ستون هشتم قرار می‌گیرد.' },
+                3: { z: 3, symbol: 'Li', name: 'لیتیم', row: 2, col: 1, category: 'metal', categoryLabel: 'فلز (ستون ۱)', minE: 2, maxE: 3, allowedLabel: 'مجاز برای لیتیم: ۲ تا ۳ الکترون (' + renderChemSymbol(3, 'Li', 0) + ' و ' + renderChemSymbol(3, 'Li', 1) + ')', stableElectrons: 2, stableDesc: 'کاتیون لیتیم (' + renderChemSymbol(3, 'Li', 1) + ') با ۲ الکترون', pageRef: 'صفحه ۷ و ۸ علوم نهم', fact: 'لیتیم (' + renderChemSymbol(3, 'Li', 0) + ') مانند سدیم در مدار آخر خود ۱ الکترون دارد و در ستون اول جای می‌گیرد؛ بنابراین خواصی مشابه سدیم دارد.' },
+                4: { z: 4, symbol: 'Be', name: 'بریلیم', row: 2, col: 2, category: 'metal', categoryLabel: 'فلز (ستون ۲)', minE: 2, maxE: 4, allowedLabel: 'مجاز برای بریلیم: ۲ تا ۴ الکترون (تا ' + renderChemSymbol(4, 'Be', 2) + ')', stableElectrons: 2, stableDesc: 'کاتیون بریلیم (' + renderChemSymbol(4, 'Be', 2) + ') با ۲ الکترون', pageRef: 'صفحه ۷ علوم نهم', fact: 'بریلیم (' + renderChemSymbol(4, 'Be', 0) + ') فلزی در ستون دوم جدول است که ۲ الکترون در مدار آخر خود دارد و هم‌ستون با منیزیم (' + renderChemSymbol(12, 'Mg', 0) + ') است.' },
+                5: { z: 5, symbol: 'B', name: 'بور', row: 2, col: 3, category: 'metalloid', categoryLabel: 'شبه‌فلز (ستون ۳)', minE: 5, maxE: 5, allowedLabel: 'فقط ۵ الکترون (تشکیل پیوند اشتراکی، فاقد یون ساده)', stableElectrons: 5, stableDesc: 'تشکیل پیوند اشتراکی (یون ساده نمی‌سازد)', pageRef: 'صفحه ۷ علوم نهم', fact: 'بور (' + renderChemSymbol(5, 'B', 0) + ') دارای ۳ الکترون در مدار آخر است و به جای تشکیل یون ساده، الکترون‌های خود را به اشتراک می‌گذارد.' },
+                6: { z: 6, symbol: 'C', name: 'کربن', row: 2, col: 4, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۴)', minE: 6, maxE: 6, allowedLabel: 'فقط ۶ الکترون (کربن پیوند اشتراکی می‌دهد، نه یون)', stableElectrons: 6, stableDesc: 'تشکیل ۴ پیوند اشتراکی (مانند متان ' + renderFormula('CH<sub>4</sub>') + ')', pageRef: 'صفحه ۶، ۷ و ۲۴ علوم نهم', fact: 'کربن (' + renderChemSymbol(6, 'C', 0) + ') در مدار آخر ۴ الکترون دارد، در ساخت مغز مداد کاربرد دارد و با اشتراک الکترون‌ها ۴ پیوند اشتراکی می‌دهد.' },
+                7: { z: 7, symbol: 'N', name: 'نیتروژن', row: 2, col: 5, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۵)', minE: 7, maxE: 10, allowedLabel: 'مجاز برای نیتروژن: ۷ تا ۱۰ الکترون (تا ' + renderChemSymbol(7, 'N', -3) + ')', stableElectrons: 10, stableDesc: 'آنیون نیترید (' + renderChemSymbol(7, 'N', -3) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۵ و ۷ علوم نهم', fact: 'نیتروژن (' + renderChemSymbol(7, 'N', 0) + ') بیشترین بخش هوای پاک (' + renderFormula('N<sub>2</sub>') + ') است و برای تولید آمونیاک (' + renderFormula('NH<sub>3</sub>') + ')، کود شیمیایی و مواد منفجره به کار می‌رود.' },
+                8: { z: 8, symbol: 'O', name: 'اکسیژن', row: 2, col: 6, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۶)', minE: 8, maxE: 10, allowedLabel: 'مجاز برای اکسیژن: ۸ تا ۱۰ الکترون (تا ' + renderChemSymbol(8, 'O', -2) + ')', stableElectrons: 10, stableDesc: 'آنیون اکسید (' + renderChemSymbol(8, 'O', -2) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۴، ۵ و ۱۹ علوم نهم', fact: 'اکسیژن (' + renderChemSymbol(8, 'O', 0) + ') دارای ۶ الکترون در مدار آخر است و در واکنش با فلزهایی مانند منیزیم با گرفتن ۲ الکترون به یون اکسید (' + renderChemSymbol(8, 'O', -2) + ') تبدیل می‌شود.' },
+                9: { z: 9, symbol: 'F', name: 'فلوئور', row: 2, col: 7, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۷)', minE: 9, maxE: 10, allowedLabel: 'مجاز برای فلوئور: ۹ تا ۱۰ الکترون (' + renderChemSymbol(9, 'F', 0) + ' و ' + renderChemSymbol(9, 'F', -1) + ')', stableElectrons: 10, stableDesc: 'آنیون فلوئورید (' + renderChemSymbol(9, 'F', -1) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۶ و ۱۹ علوم نهم', fact: 'فلوئور (' + renderChemSymbol(9, 'F', 0) + ') در مدار آخر ۷ الکترون دارد. با گرفتن ۱ الکترون به یون فلوئورید (' + renderChemSymbol(9, 'F', -1) + ') تبدیل می‌شود که در خمیردندان از پوسیدگی دندان جلوگیری می‌کند.' },
+                10: { z: 10, symbol: 'Ne', name: 'نئون', row: 2, col: 8, category: 'noble', categoryLabel: 'گاز نجیب (ستون ۸)', minE: 10, maxE: 10, allowedLabel: 'فقط ۱۰ الکترون (گاز نجیب یون تشکیل نمی‌دهد)', stableElectrons: 10, stableDesc: 'اتم خنثی پایدار (مدار آخر ۸ تایی)', pageRef: 'صفحه ۷ علوم نهم', fact: 'نئون (' + renderChemSymbol(10, 'Ne', 0) + ') گازی نجیب در ستون هشتم است که مدار دوم آن با ۸ الکترون کاملاً پر و پایدار است.' },
+                11: { z: 11, symbol: 'Na', name: 'سدیم', row: 3, col: 1, category: 'metal', categoryLabel: 'فلز (ستون ۱)', minE: 10, maxE: 11, allowedLabel: 'مجاز برای سدیم: ۱۰ تا ۱۱ الکترون (' + renderChemSymbol(11, 'Na', 0) + ' و ' + renderChemSymbol(11, 'Na', 1) + ')', stableElectrons: 10, stableDesc: 'کاتیون سدیم (' + renderChemSymbol(11, 'Na', 1) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۸، ۱۷، ۱۸ و ۲۰ علوم نهم', fact: 'سدیم (' + renderChemSymbol(11, 'Na', 0) + ') با از دست دادن ۱ الکترون به یون سدیم (' + renderChemSymbol(11, 'Na', 1) + ') تبدیل می‌شود که در ایجاد جریان الکتریکی در مغز، اعصاب و قلب نقش اساسی دارد.' },
+                12: { z: 12, symbol: 'Mg', name: 'منیزیم', row: 3, col: 2, category: 'metal', categoryLabel: 'فلز (ستون ۲)', minE: 10, maxE: 12, allowedLabel: 'مجاز برای منیزیم: ۱۰ تا ۱۲ الکترون (تا ' + renderChemSymbol(12, 'Mg', 2) + ')', stableElectrons: 10, stableDesc: 'کاتیون منیزیم (' + renderChemSymbol(12, 'Mg', 2) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۳، ۷ و ۱۹ علوم نهم', fact: 'منیزیم (' + renderChemSymbol(12, 'Mg', 0) + ') در مدار آخر ۲ الکترون دارد و با از دست دادن آن‌ها به یون منیزیم (' + renderChemSymbol(12, 'Mg', 2) + ') در منیزیم اکسید (' + renderFormula('MgO') + ') تبدیل می‌شود.' },
+                13: { z: 13, symbol: 'Al', name: 'آلومینیم', row: 3, col: 3, category: 'metal', categoryLabel: 'فلز (ستون ۳)', minE: 10, maxE: 13, allowedLabel: 'مجاز برای آلومینیم: ۱۰ تا ۱۳ الکترون (تا ' + renderChemSymbol(13, 'Al', 3) + ')', stableElectrons: 10, stableDesc: 'کاتیون آلومینیم (' + renderChemSymbol(13, 'Al', 3) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۷ و ۸ علوم نهم', fact: 'آلومینیم (' + renderChemSymbol(13, 'Al', 0) + ') فلزی در ستون سوم با ۳ الکترون در مدار آخر است و با از دست دادن ۳ الکترون به کاتیون ' + renderChemSymbol(13, 'Al', 3) + ' تبدیل می‌شود.' },
+                14: { z: 14, symbol: 'Si', name: 'سیلیسیم', row: 3, col: 4, category: 'metalloid', categoryLabel: 'شبه‌فلز (ستون ۴)', minE: 14, maxE: 14, allowedLabel: 'فقط ۱۴ الکترون (سیلیسیم پیوند اشتراکی می‌دهد، نه یون)', stableElectrons: 14, stableDesc: 'تشکیل ۴ پیوند اشتراکی (هم‌ستون با کربن)', pageRef: 'صفحه ۶، ۷ و ۸ علوم نهم', fact: 'سیلیسیم (' + renderChemSymbol(14, 'Si', 0) + ') مانند کربن در مدار آخر خود ۴ الکترون دارد (ستون چهارم) و ۲۸/۲٪ پوسته زمین را تشکیل می‌دهد.' },
+                15: { z: 15, symbol: 'P', name: 'فسفر', row: 3, col: 5, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۵)', minE: 15, maxE: 18, allowedLabel: 'مجاز برای فسفر: ۱۵ تا ۱۸ الکترون (تا ' + renderChemSymbol(15, 'P', -3) + ')', stableElectrons: 18, stableDesc: 'آنیون فسفید (' + renderChemSymbol(15, 'P', -3) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۶، ۷ و ۸ علوم نهم', fact: 'فسفر (' + renderChemSymbol(15, 'P', 0) + ') نافلزی در ستون پنجم (دارای ۵ الکترون در مدار آخر، مشابه نیتروژن) است که در کبریت‌سازی کاربرد دارد.' },
+                16: { z: 16, symbol: 'S', name: 'گوگرد', row: 3, col: 6, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۶)', minE: 16, maxE: 18, allowedLabel: 'مجاز برای گوگرد: ۱۶ تا ۱۸ الکترون (تا ' + renderChemSymbol(16, 'S', -2) + ')', stableElectrons: 18, stableDesc: 'آنیون سولفید (' + renderChemSymbol(16, 'S', -2) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۴ و ۵ علوم نهم', fact: 'گوگرد (' + renderChemSymbol(16, 'S', 0) + ') جامدی زردرنگ در دهانه آتشفشان‌هاست. مانند اکسیژن ۶ الکترون در مدار آخر دارد و در تولید سولفوریک اسید (' + renderFormula('H<sub>2</sub>SO<sub>4</sub>') + ') به کار می‌رود.' },
+                17: { z: 17, symbol: 'Cl', name: 'کلر', row: 3, col: 7, category: 'nonmetal', categoryLabel: 'نافلز (ستون ۷)', minE: 17, maxE: 18, allowedLabel: 'مجاز برای کلر: ۱۷ تا ۱۸ الکترون (' + renderChemSymbol(17, 'Cl', 0) + ' و ' + renderChemSymbol(17, 'Cl', -1) + ')', stableElectrons: 18, stableDesc: 'آنیون کلرید (' + renderChemSymbol(17, 'Cl', -1) + ') با مدار آخر ۸ تایی', pageRef: 'صفحه ۶، ۱۷ و ۱۸ علوم نهم', fact: 'کلر (' + renderChemSymbol(17, 'Cl', 0) + ') در مدار آخر ۷ الکترون دارد. با گرفتن ۱ الکترون از سدیم به یون کلرید (' + renderChemSymbol(17, 'Cl', -1) + ') تبدیل شده و نمک خوراکی (' + renderFormula('NaCl') + ') را می‌سازد.' },
+                18: { z: 18, symbol: 'Ar', name: 'آرگون', row: 3, col: 8, category: 'noble', categoryLabel: 'گاز نجیب (ستون ۸)', minE: 18, maxE: 18, allowedLabel: 'فقط ۱۸ الکترون (گاز نجیب یون تشکیل نمی‌دهد)', stableElectrons: 18, stableDesc: 'اتم خنثی پایدار (مدار سوم با ۸ الکترون پر است)', pageRef: 'صفحه ۴ و ۷ علوم نهم', fact: 'آرگون (' + renderChemSymbol(18, 'Ar', 0) + ') از گازهای هوای پاک است که در مدار سوم خود ۸ الکترون دارد و به دلیل پر بودن مدار آخر، یون تشکیل نمی‌دهد.' }
+            };
+
+            // Generate the exact 40 possible valid atomic & ionic states (18 neutral + 9 cations + 13 anions = 40)
+            var ALL_40_MODELS = [];
+            (function buildAll40Models() {
+                var idx = 1;
+                for (var z = 1; z <= 18; z++) {
+                    var el = ELEMENTS[z];
+                    var neutralBadge = renderChemSymbol(z, el.symbol, 0);
+                    ALL_40_MODELS.push({
+                        index: idx++,
+                        key: z + '_' + z,
+                        p: z,
+                        e: z,
+                        type: 'neutral',
+                        typeLabel: 'اتم خنثی',
+                        symbolHtml: neutralBadge,
+                        title: 'اتم خنثی ' + el.name,
+                        titleHtml: 'اتم خنثی ' + el.name + ' (' + neutralBadge + ')',
+                        promptHtml: 'اتم خنثی عنصر «' + el.name + '» با نماد ' + neutralBadge + ' و عدد اتمی ' + toPersianNum(z) + ' را در آزمایشگاه بسازید.',
+                        hintHtml: 'تعداد پروتون‌ها را روی ' + toPersianNum(z) + ' و تعداد الکترون‌ها را نیز برابر با ' + toPersianNum(z) + ' قرار دهید تا ' + neutralBadge + ' ساخته شود.'
+                    });
+                    for (var eVal = el.minE; eVal <= el.maxE; eVal++) {
+                        if (eVal === z) continue;
+                        var chg = z - eVal;
+                        var isCat = chg > 0;
+                        var isStable = (eVal === 2 || eVal === 10 || eVal === 18);
+                        var ionBadge = renderChemSymbol(z, el.symbol, chg);
+                        var ionTitlePlain = (isCat ? 'کاتیون ' : 'آنیون ') + el.name;
+                        var ionTitleHtml = ionTitlePlain + ' (' + ionBadge + ')';
+                        var diffE = Math.abs(chg);
+                        ALL_40_MODELS.push({
+                            index: idx++,
+                            key: z + '_' + eVal,
+                            p: z,
+                            e: eVal,
+                            type: isCat ? 'cation' : 'anion',
+                            typeLabel: isCat ? (isStable ? 'کاتیون پایدار' : 'کاتیون واسط') : (isStable ? 'آنیون پایدار' : 'آنیون واسط'),
+                            symbolHtml: ionBadge,
+                            title: ionTitlePlain,
+                            titleHtml: ionTitleHtml,
+                            promptHtml: ionTitleHtml + ' را بسازید که از ' + (isCat ? 'از دست دادن ' : 'گرفتن ') + toPersianNum(diffE) + ' الکترون توسط اتم ' + el.name + ' ایجاد می‌شود.',
+                            hintHtml: 'عنصر ' + el.name + ' دارای ' + toPersianNum(z) + ' پروتون است؛ برای ساخت ' + ionBadge + ' تعداد الکترون‌ها را روی ' + toPersianNum(eVal) + ' تنظیم کنید.'
+                        });
+                    }
+                }
+            })();
+
+            // 5 Progressive Trophy Cups at 5, 15, 25, 35, and 40 models (Scaling larger in size!)
+            var TROPHY_CUPS = [
+                { id: 'cup1', threshold: 5,  title: 'کاپ برنزی کاوشگر اتم', desc: 'ساخت ۵ مدل اتمی و یونی', color: '#d97706', border: 'border-amber-600/60', bg: 'from-amber-950/50 to-slate-900', svgSize: 'w-11 h-11', cardPad: 'p-3' },
+                { id: 'cup2', threshold: 15, title: 'کاپ نقره‌ای شیمی‌دان جوان', desc: 'ساخت ۱۵ مدل اتمی و یونی', color: '#cbd5e1', border: 'border-slate-300/60', bg: 'from-slate-800/80 to-slate-900', svgSize: 'w-14 h-14', cardPad: 'p-3.5' },
+                { id: 'cup3', threshold: 25, title: 'کاپ طلایی استاد یون‌ها', desc: 'ساخت ۲۵ مدل اتمی و یونی', color: '#facc15', border: 'border-yellow-400/75', bg: 'from-yellow-950/60 to-slate-900', svgSize: 'w-16 h-16', cardPad: 'p-4' },
+                { id: 'cup4', threshold: 35, title: 'کاپ پلاتینیوم معمار تناوبی', desc: 'ساخت ۳۵ مدل اتمی و یونی', color: '#38bdf8', border: 'border-sky-400/80', bg: 'from-sky-950/60 to-slate-900', svgSize: 'w-20 h-20', cardPad: 'p-4' },
+                { id: 'cup5', threshold: 40, title: 'کاپ الماس دانشمند ارشد علوم نهم', desc: 'کشف هر ۴۰ مدل ممکن در آزمایشگاه!', color: '#f43f5e', border: 'border-rose-400', bg: 'from-rose-950/70 via-purple-950/60 to-slate-900', svgSize: 'w-24 h-24', cardPad: 'p-5' }
+            ];
+
+            // Application State
+            var DISCOVERED_KEY = 'ms9_discovered_40_v2';
+            var SOLVED_QUIZ_KEY = 'ms9_solved_quiz_40_v2';
+
+            function loadSavedSet(storageKey, defaultItem) {
+                var s = new Set();
+                if (defaultItem) s.add(defaultItem);
+                try {
+                    var raw = safeStorage.getItem(storageKey);
+                    if (raw) {
+                        var arr = JSON.parse(raw);
+                        if (Array.isArray(arr)) arr.forEach(function (k) { s.add(k); });
+                    }
+                } catch (e) {}
+                return s;
+            }
+
+            function saveSet(storageKey, setObj) {
+                try {
+                    safeStorage.setItem(storageKey, JSON.stringify(Array.from(setObj)));
+                } catch (e) {}
+            }
+
+            var state = {
+                protons: 11,
+                electrons: 11,
+                activeTab: 'tab-lab',
+                orbitMode: 'textbook',
+                showWatermark: true,
+                orbitAngleOffset: 0,
+                animFrameId: null,
+                quizFilter: 'all',
+                currentQuizKey: '9_10',
+                discoveredKeys: loadSavedSet(DISCOVERED_KEY, '11_11'),
+                solvedQuizKeys: loadSavedSet(SOLVED_QUIZ_KEY, null),
+                toastTimeout: null
+            };
+
+            // =========================================================================
+            // 3. TAB NAVIGATION (LIQUID GLASS DOCK)
+            // =========================================================================
+            function switchTab(tabId, playSound) {
+                state.activeTab = tabId;
+                document.querySelectorAll('.tab-panel').forEach(function (panel) {
+                    if (panel.id === tabId) panel.classList.add('active');
+                    else panel.classList.remove('active');
+                });
+                document.querySelectorAll('.dock-btn').forEach(function (btn) {
+                    if (btn.getAttribute('data-tab') === tabId) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                });
+                if (playSound) LabSoundEngine.playUiSwitch();
+                if (tabId === 'tab-achievements') renderAchievementsSection();
+                if (tabId === 'tab-quiz') renderQuizSection();
+                try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+            }
+
+            // =========================================================================
+            // 4. DISCOVERY TRACKER & TROPHY CUP ENGINE
+            // =========================================================================
+            function countUnlockedCups(discoveredCount) {
+                var c = 0;
+                TROPHY_CUPS.forEach(function (cup) {
+                    if (discoveredCount >= cup.threshold) c++;
+                });
+                return c;
+            }
+
+            function recordModelDiscovery(p, e) {
+                var key = p + '_' + e;
+                var prevCount = state.discoveredKeys.size;
+                var prevCups = countUnlockedCups(prevCount);
+
+                if (!state.discoveredKeys.has(key)) {
+                    state.discoveredKeys.add(key);
+                    saveSet(DISCOVERED_KEY, state.discoveredKeys);
+                    var newCount = state.discoveredKeys.size;
+                    var newCups = countUnlockedCups(newCount);
+
+                    if (newCups > prevCups) {
+                        var unlockedCup = TROPHY_CUPS[newCups - 1];
+                        LabSoundEngine.playTrophyUnlock();
+                        showToastNotification(
+                            '🏆 تبریک! «' + unlockedCup.title + '» آزاد شد!',
+                            'شما تاکنون ' + toPersianNum(newCount) + ' مدل از ۴۰ مدل اتمی و یونی ممکن را ساخته‌اید. به بخش «دستاوردها» سر بزنید!',
+                            'trophy'
+                        );
+                    }
+                }
+                updateDiscoveryBadges();
+            }
+
+            function updateDiscoveryBadges() {
+                var cnt = state.discoveredKeys.size;
+                setText('headerDiscoveredText', toPersianNum(cnt) + ' / ۴۰ کشف‌شده');
+                setText('dockAchBadge', toPersianNum(cnt));
+            }
+
+            function renderAchievementsSection() {
+                var cnt = state.discoveredKeys.size;
+                var pct = Math.round((cnt / 40) * 100);
+                setText('achHeadlineText', 'شما ' + toPersianNum(cnt) + ' مدل از ۴۰ مدل ممکن را ساخته‌اید!');
+                setText('achPercentBig', toPersianNum(pct) + '٪');
+                var bar = document.getElementById('achProgressBar');
+                if (bar) bar.style.width = pct + '%';
+
+                var unlockedCups = countUnlockedCups(cnt);
+                setText('unlockedCupsCountBadge', 'کاپ‌های دریافت‌شده: ' + toPersianNum(unlockedCups) + ' از ۵');
+
+                var cupsGrid = document.getElementById('trophyCupsGrid');
+                if (cupsGrid) {
+                    cupsGrid.innerHTML = '';
+                    TROPHY_CUPS.forEach(function (cup, idx) {
+                        var isUnlocked = cnt >= cup.threshold;
+                        var card = document.createElement('div');
+                        card.className = 'rounded-3xl border-2 ' + (isUnlocked ? cup.border + ' bg-gradient-to-b ' + cup.bg + ' shadow-xl' : 'border-slate-800 bg-slate-950/50 opacity-55') + ' ' + cup.cardPad + ' flex flex-col items-center text-center transition-all duration-300';
+                        card.innerHTML =
+                            '<div class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full ' + (isUnlocked ? 'bg-amber-400/20 text-amber-300 border border-amber-400/40' : 'bg-slate-900 text-slate-500') + ' mb-2">' +
+                                (isUnlocked ? '✓ دریافت‌شده' : 'نیاز به ' + toPersianNum(cup.threshold) + ' مدل') +
+                            '</div>' +
+                            '<div class="' + cup.svgSize + ' flex items-center justify-center my-2 ' + (isUnlocked ? 'float-logo-anim' : 'grayscale opacity-40') + '">' +
+                                '<svg viewBox="0 0 64 64" class="w-full h-full overflow-visible">' +
+                                    '<path d="M18 10h28v14c0 9.5-6 17-14 17s-14-7.5-14-17V10z" fill="' + cup.color + '" stroke="#ffffff" stroke-width="2"/>' +
+                                    '<path d="M18 14H10v6c0 5 3.5 9 8 9M46 14h8v6c0 5-3.5 9-8 9" fill="none" stroke="' + cup.color + '" stroke-width="3.5" stroke-linecap="round"/>' +
+                                    '<path d="M32 41v11M20 52h24" stroke="' + cup.color + '" stroke-width="4" stroke-linecap="round"/>' +
+                                    '<text x="32" y="27" text-anchor="middle" fill="#0f172a" font-size="12" font-weight="900">' + toPersianNum(idx + 1) + '</text>' +
+                                '</svg>' +
+                            '</div>' +
+                            '<h4 class="text-xs sm:text-sm font-black ' + (isUnlocked ? 'text-white' : 'text-slate-400') + ' mt-1">' + cup.title + '</h4>' +
+                            '<p class="text-[11px] text-slate-400 mt-0.5">' + cup.desc + '</p>';
+                        cupsGrid.appendChild(card);
+                    });
+                }
+
+                var albumGrid = document.getElementById('discoveryAlbumGrid');
+                if (albumGrid) {
+                    albumGrid.innerHTML = '';
+                    ALL_40_MODELS.forEach(function (m) {
+                        var isDisc = state.discoveredKeys.has(m.key);
+                        var btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'rounded-2xl border p-2.5 flex flex-col items-center justify-between min-h-[84px] transition cursor-pointer ' +
+                            (isDisc
+                                ? 'bg-slate-800/90 border-sky-400/60 hover:border-amber-400 shadow-md'
+                                : 'bg-slate-950/60 border-slate-800/80 opacity-60 hover:opacity-90');
+                        btn.innerHTML =
+                            '<div class="w-full flex items-center justify-between text-[10px] font-bold">' +
+                                '<span class="text-slate-400">#' + toPersianNum(m.index) + '</span>' +
+                                '<span class="' + (isDisc ? 'text-emerald-400' : 'text-slate-500') + '">' + (isDisc ? '✓ کشف‌شده' : '🔒 قفل') + '</span>' +
+                            '</div>' +
+                            '<div dir="ltr" class="text-base sm:text-lg font-black ' + (isDisc ? 'text-white' : 'text-slate-500') + ' my-1">' + (isDisc ? m.symbolHtml : '؟') + '</div>' +
+                            '<div class="text-[10px] font-semibold ' + (isDisc ? 'text-sky-300' : 'text-slate-400') + ' truncate w-full text-center">' + m.title + '</div>';
+
+                        btn.addEventListener('click', function () {
+                            if (isDisc) {
+                                state.protons = m.p;
+                                state.electrons = m.e;
+                                updateAllUI();
+                                switchTab('tab-lab', true);
+                            } else {
+                                LabSoundEngine.playUiSwitch();
+                                showToastNotification(
+                                    '💡 راهنمای کشف «' + m.titleHtml + '»',
+                                    m.hintHtml,
+                                    'info'
+                                );
+                            }
+                        });
+                        albumGrid.appendChild(btn);
+                    });
+                }
+            }
+
+            // =========================================================================
+            // 5. CORE LOGIC, BOHR RENDERER & SCIENTIFIC VALIDATION
+            // =========================================================================
+            function getShellDistribution(eCount) {
+                var s1 = Math.min(2, Math.max(0, eCount));
+                var r1 = Math.max(0, eCount - s1);
+                var s2 = Math.min(8, r1);
+                var r2 = Math.max(0, r1 - s2);
+                var s3 = Math.min(8, r2);
+                var arr = [];
+                if (s1 > 0) arr.push(s1);
+                if (s2 > 0) arr.push(s2);
+                if (s3 > 0) arr.push(s3);
+                return { array: arr, s1: s1, s2: s2, s3: s3, valence: arr.length ? arr[arr.length - 1] : 0, totalShells: arr.length };
+            }
+
+            function isElectronCountStable(eCount) {
+                return eCount === 2 || eCount === 10 || eCount === 18;
+            }
+
+            function getScientificIonRejectionReason(el, attemptedE) {
+                var z = el.z;
+                var attemptedCharge = z - attemptedE;
+                var elNeutralBadge = renderChemSymbol(z, el.symbol, 0);
+                var elAttemptBadge = renderChemSymbol(z, el.symbol, attemptedCharge);
+
+                if (el.category === 'noble') {
+                    return {
+                        title: 'خطای علمی: گاز نجیب «' + el.name + '» یون تشکیل نمی‌دهد!',
+                        message: 'عنصر ' + el.name + ' (' + elNeutralBadge + ') در ستون هشتم جدول قرار دارد و مدار آخر آن کاملاً پر و پایدار است (' + toPersianNum(z) + ' الکترون)؛ بنابراین در طبیعت الکترون نمی‌گیرد و از دست نمی‌دهد و یون ' + elAttemptBadge + ' وجود خارجی ندارد.'
+                    };
+                }
+                if (z === 5 || z === 6 || z === 14) {
+                    return {
+                        title: 'خطای علمی: «' + el.name + '» یون ساده تشکیل نمی‌دهد!',
+                        message: 'اتم ' + el.name + ' (' + elNeutralBadge + ') دارای ' + toPersianNum(el.col) + ' الکترون در مدار آخر است. طبق کتاب علوم نهم، این عنصر به جای داد و ستد الکترون، با اشتراک الکترون‌ها «پیوند اشتراکی» تشکیل می‌دهد.'
+                    };
+                }
+                if (z === 1) {
+                    return {
+                        title: 'خطای علمی: محدودیت ظرفیت مدار اول هیدروژن!',
+                        message: 'اتم هیدروژن (' + elNeutralBadge + ') در مدار اول خود ۱ الکترون دارد و حداکثر می‌تواند با گرفتن ۱ الکترون به یون ' + renderChemSymbol(1, 'H', -1) + ' با آرایش ۲ تایی پایدار (مشابه هلیم) برسد.'
+                    };
+                }
+                if (el.category === 'metal') {
+                    if (attemptedE > z) {
+                        return {
+                            title: 'خطای علمی: فلز «' + el.name + '» هرگز یون منفی (آنیون) نمی‌سازد!',
+                            message: 'عنصر ' + el.name + ' (' + elNeutralBadge + ') یک فلز در ستون ' + toPersianNum(el.col) + ' است. اتم‌های فلزی در واکنش‌ها فقط الکترون از دست می‌دهند و به کاتیون (+) تبدیل می‌شوند و هرگز یون منفی ' + elAttemptBadge + ' نمی‌سازند.'
+                        };
+                    }
+                    if (attemptedE < el.minE) {
+                        var maxPos = z - el.minE;
+                        return {
+                            title: 'خطای علمی: شکستن مدار درونی پایدار ممکن نیست!',
+                            message: 'اتم فلزی ' + el.name + ' تنها ' + toPersianNum(maxPos) + ' الکترون در مدار آخر خود دارد و پس از تبدیل به کاتیون پایدار (' + renderChemSymbol(z, el.symbol, maxPos) + ')، مدار درونی آن کاملاً پایدار است.'
+                        };
+                    }
+                }
+                if (el.category === 'nonmetal') {
+                    if (attemptedE < z) {
+                        return {
+                            title: 'خطای علمی: نافلز «' + el.name + '» یون مثبت (کاتیون) نمی‌سازد!',
+                            message: 'اتم نافلز ' + el.name + ' (' + elNeutralBadge + ') در مدار آخر خود ' + toPersianNum(el.col) + ' الکترون دارد. نافلزها در واکنش‌های یونی الکترون از دست نمی‌دهند، بلکه الکترون می‌گیرند تا مدار آخرشان ۸ تایی شود.'
+                        };
+                    }
+                    if (attemptedE > el.maxE) {
+                        return {
+                            title: 'خطای علمی: مدار آخر ۸ الکترونی کاملاً پر شده است!',
+                            message: 'این آنیون با رسیدن به ' + toPersianNum(el.maxE) + ' الکترون (' + renderChemSymbol(z, el.symbol, z - el.maxE) + ')، مدار آخر ۸ تایی کامل دارد و گنجایش پذیرش الکترون بیشتر را ندارد.'
+                        };
+                    }
+                }
+                return { title: 'خطای علمی: ذره نامعتبر', message: 'این تعداد الکترون برای عنصر ' + el.name + ' در طبیعت وجود ندارد.' };
+            }
+
+            function showToastNotification(titleHtml, messageHtml, mode, targetBoxId) {
+                var toast = document.getElementById('validationToast');
+                var timerBar = document.getElementById('validationToastBar');
+                var icon = document.getElementById('validationToastIcon');
+                var badge = document.getElementById('validationToastBadge');
+                setHtml('validationToastTitle', titleHtml);
+                setHtml('validationToastMsg', messageHtml);
+
+                if (icon && badge) {
+                    if (mode === 'trophy') {
+                        icon.textContent = '🏆';
+                        badge.textContent = 'کاپ افتخار جدید!';
+                        badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold shrink-0';
+                    } else if (mode === 'info') {
+                        icon.textContent = '💡';
+                        badge.textContent = 'راهنمای کشف ذره';
+                        badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/40 font-bold shrink-0';
+                    } else {
+                        icon.textContent = '!';
+                        badge.textContent = 'قانون شیمی نهم';
+                        badge.className = 'text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold shrink-0';
+                    }
+                }
+
+                if (timerBar) {
+                    timerBar.classList.remove('toast-timer-bar');
+                    void timerBar.offsetWidth;
+                    timerBar.classList.add('toast-timer-bar');
+                }
+                if (toast) {
+                    toast.classList.remove('-translate-y-10', 'opacity-0', 'pointer-events-none');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+                    if (state.toastTimeout) clearTimeout(state.toastTimeout);
+                    state.toastTimeout = setTimeout(hideValidationToast, 5000);
+                }
+                if (targetBoxId) {
+                    var box = document.getElementById(targetBoxId);
+                    if (box) {
+                        box.classList.remove('animate-shake');
+                        void box.offsetWidth;
+                        box.classList.add('animate-shake');
+                    }
+                }
+            }
+
+            function triggerValidationAlert(title, message, targetBoxId) {
+                LabSoundEngine.playScientificError();
+                showToastNotification(title, message, 'error', targetBoxId);
+            }
+
+            function hideValidationToast() {
+                var toast = document.getElementById('validationToast');
+                if (toast) {
+                    toast.classList.add('-translate-y-10', 'opacity-0', 'pointer-events-none');
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                }
+            }
+
+            function getElectronAnglesForShell(shellIndex, countInShell, mode, offset) {
+                var angles = [];
+                if (mode === 'orbit') {
+                    var speed = (shellIndex === 0) ? 1.3 : (shellIndex === 1 ? -0.85 : 0.55);
+                    for (var i = 0; i < countInShell; i++) {
+                        angles.push((2 * Math.PI * i) / countInShell - Math.PI / 2 + offset * speed);
+                    }
+                    return angles;
+                }
+                if (shellIndex === 0) {
+                    if (countInShell === 1) angles.push(-Math.PI / 2);
+                    else if (countInShell >= 2) angles.push(-Math.PI / 2, Math.PI / 2);
+                    return angles;
+                }
+                var base = [-Math.PI / 2, Math.PI / 2, 0, Math.PI];
+                var spread = (shellIndex === 1) ? 0.14 : 0.105;
+                for (var s = 0; s < 4; s++) {
+                    var first = countInShell > s;
+                    var second = countInShell > (s + 4);
+                    if (first && second) {
+                        angles.push(base[s] - spread, base[s] + spread);
+                    } else if (first) {
+                        angles.push(base[s]);
+                    }
+                }
+                return angles;
+            }
+
+            function renderBohrSvg() {
+                var shellsGroup = document.getElementById('svgShellsGroup');
+                var electronsGroup = document.getElementById('svgElectronsGroup');
+                var centerHtml = document.getElementById('svgCenterHtml');
+                if (!shellsGroup || !electronsGroup) return;
+
+                var dist = getShellDistribution(state.electrons);
+                var radii = [56, 102, 148];
+                shellsGroup.innerHTML = '';
+                electronsGroup.innerHTML = '';
+
+                var el = ELEMENTS[state.protons];
+                var charge = state.protons - state.electrons;
+                if (centerHtml && el) {
+                    centerHtml.innerHTML = state.showWatermark ? renderChemSymbol(state.protons, el.symbol, charge) : '';
+                }
+
+                for (var s = 0; s < 3; s++) {
+                    var r = radii[s];
+                    var occupied = s < dist.totalShells;
+                    var isValence = (s === dist.totalShells - 1);
+                    var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    circle.setAttribute('cx', '180');
+                    circle.setAttribute('cy', '180');
+                    circle.setAttribute('r', String(r));
+                    circle.setAttribute('fill', 'none');
+                    circle.setAttribute('class', 'shell-circle');
+                    if (occupied) {
+                        circle.setAttribute('stroke', isValence ? '#eab308' : '#38bdf8');
+                        circle.setAttribute('stroke-width', isValence ? '2.4' : '1.8');
+                        circle.setAttribute('opacity', isValence ? '0.9' : '0.65');
+                    } else {
+                        circle.setAttribute('stroke', '#334155');
+                        circle.setAttribute('stroke-width', '1.2');
+                        circle.setAttribute('stroke-dasharray', '4 6');
+                        circle.setAttribute('opacity', '0.35');
+                    }
+                    shellsGroup.appendChild(circle);
+                }
+
+                dist.array.forEach(function (cnt, sIdx) {
+                    var r = radii[sIdx];
+                    var isValence = (sIdx === dist.totalShells - 1);
+                    var angles = getElectronAnglesForShell(sIdx, cnt, state.orbitMode, state.orbitAngleOffset);
+                    angles.forEach(function (ang) {
+                        var ex = 180 + r * Math.cos(ang);
+                        var ey = 180 + r * Math.sin(ang);
+                        var dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        dot.setAttribute('cx', ex.toFixed(2));
+                        dot.setAttribute('cy', ey.toFixed(2));
+                        dot.setAttribute('r', isValence ? '7.5' : '6.2');
+                        dot.setAttribute('fill', isValence ? 'url(#electronGradValence)' : 'url(#electronGradInner)');
+                        dot.setAttribute('stroke', '#0f172a');
+                        dot.setAttribute('stroke-width', '1.5');
+                        dot.setAttribute('class', isValence ? 'electron-dot electron-dot-valence' : 'electron-dot');
+                        electronsGroup.appendChild(dot);
+                    });
+                });
+            }
+
+            function startOrbitLoop() {
+                if (state.animFrameId) cancelAnimationFrame(state.animFrameId);
+                function step() {
+                    if (state.orbitMode === 'orbit') {
+                        state.orbitAngleOffset += 0.018;
+                        renderBohrSvg();
+                        state.animFrameId = requestAnimationFrame(step);
+                    }
+                }
+                state.animFrameId = requestAnimationFrame(step);
+            }
+
+            function updateEducationalMessage() {
+                var el = ELEMENTS[state.protons];
+                if (!el) return;
+                var p = state.protons;
+                var e = state.electrons;
+                var charge = p - e;
+                var dist = getShellDistribution(e);
+                var isStable = isElectronCountStable(e);
+                var badgeHtml = renderChemSymbol(p, el.symbol, charge);
+
+                setText('eduRefPage', 'مرجع: ' + el.pageRef);
+                setHtml('eduTextbookFact', el.fact);
+
+                if (charge === 0) {
+                    setHtml('eduMessageTitle', 'اتم خنثی ' + el.name + ' (' + badgeHtml + ') — دارای ' + toPersianNum(p) + ' پروتون و ' + toPersianNum(e) + ' الکترون');
+                    setHtml('eduMessageBody', 'تعداد پروتون‌های مثبت (' + toPersianNum(p) + ') با الکترون‌های منفی (' + toPersianNum(e) + ') برابر است؛ بنابراین ذره یک «اتم خنثی» با بار صفر است و در مدار آخر خود ' + toPersianNum(dist.valence) + ' الکترون دارد.');
+                } else if (charge > 0) {
+                    setHtml('eduMessageTitle', 'یون مثبت (کاتیون) ' + el.name + ' (' + badgeHtml + ')');
+                    setHtml('eduMessageBody', 'اتم ' + el.name + ' با از دست دادن ' + toPersianNum(charge) + ' الکترون به کاتیون ' + badgeHtml + ' با بار الکتریکی <span dir="ltr" class="font-extrabold text-rose-300">' + formatChargeDisplay(charge) + '</span> تبدیل شده است' + (isStable ? ' و مدار آخر آن کاملاً پایدار شده است!' : '.'));
+                } else {
+                    var gained = Math.abs(charge);
+                    setHtml('eduMessageTitle', 'یون منفی (آنیون) ' + el.name + ' (' + badgeHtml + ')');
+                    setHtml('eduMessageBody', 'اتم ' + el.name + ' با گرفتن ' + toPersianNum(gained) + ' الکترون به آنیون ' + badgeHtml + ' با بار الکتریکی <span dir="ltr" class="font-extrabold text-emerald-300">' + formatChargeDisplay(charge) + '</span> تبدیل شده است' + (isStable ? ' و مدار آخر آن کاملاً ۸ تایی و پایدار شده است!' : '.'));
+                }
+            }
+
+            function highlightPeriodicTable(activeZ, activeCol) {
+                for (var col = 1; col <= 8; col++) {
+                    var header = document.getElementById('ptColHeader-' + col);
+                    if (header) {
+                        header.className = (col === activeCol)
+                            ? 'text-center py-1.5 px-1 rounded-xl bg-sky-500/20 border-2 border-sky-400 text-xs font-bold text-white shadow-md transition'
+                            : 'text-center py-1.5 px-1 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-slate-400 transition';
+                    }
+                }
+                for (var z = 1; z <= 18; z++) {
+                    var cell = document.getElementById('ptCell-' + z);
+                    if (cell) {
+                        if (z === activeZ) {
+                            cell.classList.add('ring-2', 'ring-yellow-400', 'scale-[1.03]', 'z-10');
+                        } else {
+                            cell.classList.remove('ring-2', 'ring-yellow-400', 'scale-[1.03]', 'z-10');
+                        }
+                    }
+                }
+                var el = ELEMENTS[activeZ];
+                if (el) {
+                    var neutralDist = getShellDistribution(el.z);
+                    setHtml('ptSelectedBadge', renderChemSymbol(el.z, el.symbol, 0));
+                    setHtml('ptSelectedTitle', 'عنصر انتخاب‌شده: ' + el.name + ' (' + renderChemSymbol(el.z, el.symbol, 0) + ')');
+                    setText('ptSelectedSub', 'عدد اتمی: ' + toPersianNum(el.z) + ' | آرایش الکترونی اتم خنثی: ' + neutralDist.array.map(toPersianNum).join(' ، ') + ' | ' + el.categoryLabel);
+                }
+            }
+
+            function updateAllUI() {
+                var p = state.protons;
+                var e = state.electrons;
+                var charge = p - e;
+                var el = ELEMENTS[p];
+                if (!el) return;
+
+                recordModelDiscovery(p, e);
+
+                var currentDist = getShellDistribution(e);
+                var neutralDist = getShellDistribution(p);
+                var stableDist = getShellDistribution(el.stableElectrons);
+                var isCurrentStable = isElectronCountStable(e);
+
+                var inputP = document.getElementById('inputProtons');
+                var sliderP = document.getElementById('sliderProtons');
+                var inputE = document.getElementById('inputElectrons');
+                var sliderE = document.getElementById('sliderElectrons');
+
+                if (inputP && document.activeElement !== inputP) inputP.value = toPersianNum(p);
+                if (sliderP) sliderP.value = String(p);
+                if (inputE && document.activeElement !== inputE) inputE.value = toPersianNum(e);
+                if (sliderE) sliderE.value = String(e);
+
+                setHtml('allowedElectronsBadge', el.allowedLabel);
+                var btnStabilize = document.getElementById('btnMakeStableIon');
+                if (btnStabilize) {
+                    if (el.minE === el.maxE) {
+                        btnStabilize.innerHTML = 'فاقد یون ساده (فقط اتم خنثی)';
+                    } else {
+                        btnStabilize.innerHTML = 'تبدیل به یون پایدار (' + renderChemSymbol(p, el.symbol, p - el.stableElectrons) + ')';
+                    }
+                }
+
+                var particleTypeBadge = document.getElementById('particleTypeBadge');
+                var stabilityBadge = document.getElementById('stabilityBadge');
+                if (particleTypeBadge) {
+                    if (charge === 0) {
+                        particleTypeBadge.textContent = 'اتم خنثی';
+                        particleTypeBadge.className = 'px-3 py-1 rounded-full text-xs font-extrabold bg-indigo-500/20 text-indigo-300 border border-indigo-500/40';
+                    } else if (charge > 0) {
+                        particleTypeBadge.textContent = 'یون مثبت (کاتیون)';
+                        particleTypeBadge.className = 'px-3 py-1 rounded-full text-xs font-extrabold bg-rose-500/20 text-rose-300 border border-rose-500/40';
+                    } else {
+                        particleTypeBadge.textContent = 'یون منفی (آنیون)';
+                        particleTypeBadge.className = 'px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+                    }
+                }
+                if (stabilityBadge) {
+                    if (isCurrentStable) {
+                        stabilityBadge.textContent = (e === 2) ? 'پایدار (مدار ۲ تایی پر)' : 'پایدار (مدار آخر ۸ تایی)';
+                        stabilityBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+                    } else {
+                        stabilityBadge.textContent = 'مدار آخر ناتمام (' + toPersianNum(currentDist.valence) + ' الکترون)';
+                        stabilityBadge.className = 'px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30';
+                    }
+                }
+
+                setHtml('chemNotationLiveBadge', renderChemSymbol(p, el.symbol, charge, 'text-sky-400', 'text-amber-400'));
+                setHtml('headerCurrentParticleMini', 'ذره فعلی: ' + el.name + ' (' + renderChemSymbol(p, el.symbol, charge) + ')');
+
+                var sVals = [currentDist.s1, currentDist.s2, currentDist.s3];
+                for (var i = 0; i < 3; i++) {
+                    var card = document.getElementById('shellCard' + (i + 1));
+                    setText('shellVal' + (i + 1), toPersianNum(sVals[i]) + ' الکترون');
+                    if (card) {
+                        var baseCls = ' rounded-xl p-2.5 flex flex-col items-center justify-between gap-1 transition';
+                        if (i === currentDist.totalShells - 1) card.className = 'bg-amber-500/15 border border-amber-500/50' + baseCls;
+                        else if (sVals[i] > 0) card.className = 'bg-sky-500/10 border border-sky-500/30' + baseCls;
+                        else card.className = 'bg-slate-900/50 border border-slate-800 opacity-50' + baseCls;
+                    }
+                }
+
+                setText('metricElementName', el.name);
+                setHtml('metricElementSym', renderChemSymbol(p, el.symbol, charge));
+                setText('metricElementCategory', el.categoryLabel);
+                setText('metricAtomicNumber', toPersianNum(p));
+                setText('metricChargeVal', formatChargeDisplay(charge));
+                setText('metricChargeText', charge === 0 ? 'خنثی' : (charge > 0 ? 'کاتیون (+)' : 'آنیون (−)'));
+                setText('metricChargeFormula', toPersianNum(p) + ' پروتون − ' + toPersianNum(e) + ' الکترون');
+                setText('metricValenceCount', toPersianNum(currentDist.valence));
+                setText('metricTotalShells', toPersianNum(currentDist.totalShells));
+                setText('metricElectronConfig', 'آرایش: ' + currentDist.array.map(toPersianNum).join(' ، '));
+
+                renderBohrSvg();
+                updateEducationalMessage();
+
+                var stableCharge = p - el.stableElectrons;
+                setText('tblNeutralName', el.name);
+                setText('tblCurrentName', (charge === 0 ? 'اتم ' : 'یون ') + el.name);
+                setHtml('tblNeutralSym', renderChemSymbol(p, el.symbol, 0));
+                setHtml('tblCurrentSym', renderChemSymbol(p, el.symbol, charge));
+                setHtml('tblStableSym', renderChemSymbol(p, el.symbol, stableCharge));
+                setText('tblNeutralP', toPersianNum(p));
+                setText('tblCurrentP', toPersianNum(p));
+                setText('tblStableP', toPersianNum(p));
+                setText('tblNeutralE', toPersianNum(p));
+                setText('tblCurrentE', toPersianNum(e));
+                setText('tblStableE', toPersianNum(el.stableElectrons));
+                setText('tblNeutralShells', neutralDist.array.map(toPersianNum).join(' ، '));
+                setText('tblCurrentShells', currentDist.array.map(toPersianNum).join(' ، '));
+                setText('tblStableShells', stableDist.array.map(toPersianNum).join(' ، '));
+                setText('tblNeutralValence', toPersianNum(neutralDist.valence));
+                setText('tblCurrentValence', toPersianNum(currentDist.valence));
+                setText('tblStableValence', toPersianNum(stableDist.valence));
+                setText('tblNeutralFull', isElectronCountStable(p) ? 'بله (پایدار)' : 'خیر');
+                setText('tblCurrentFull', isCurrentStable ? 'بله (پر شده)' : 'خیر');
+                setHtml('tblStableFull', el.stableDesc);
+
+                setText('ionDiffSummaryBadge', charge === 0 ? 'ذره فعلی شما: اتم خنثی' : (charge > 0 ? 'ذره فعلی: کاتیون با بار ' + formatChargeDisplay(charge) : 'ذره فعلی: آنیون با بار ' + formatChargeDisplay(charge)));
+                setText('ionElectronExchange', charge === 0 ? '۰ الکترون (خنثی)' : (charge > 0 ? toPersianNum(charge) + ' الکترون از دست داده' : toPersianNum(Math.abs(charge)) + ' الکترون گرفته'));
+                setText('ionShellCountDiff', currentDist.totalShells === neutralDist.totalShells ? 'بدون تغییر (' + toPersianNum(currentDist.totalShells) + ' مدار)' : 'از ' + toPersianNum(neutralDist.totalShells) + ' به ' + toPersianNum(currentDist.totalShells) + ' مدار');
+                setHtml('ionComparisonAnalysis', 'اتم خنثی ' + el.name + ' (' + renderChemSymbol(p, el.symbol, 0) + ') در مدار آخر خود ' + toPersianNum(neutralDist.valence) + ' الکترون دارد. حالت پایدار این عنصر: «' + el.stableDesc + '».');
+
+                highlightPeriodicTable(p, el.col);
+                setHtml('quizCurrentLabParticle', el.name + ' (' + renderChemSymbol(p, el.symbol, charge) + ') — ' + toPersianNum(p) + ' پروتون، ' + toPersianNum(e) + ' الکترون');
+            }
+
+            function setProtonsValidated(rawValue) {
+                var cleaned = toEnglishDigits(rawValue).trim();
+                var parsed = Number(cleaned);
+                if (cleaned === '' || isNaN(parsed) || !Number.isInteger(parsed)) {
+                    triggerValidationAlert('ورودی نامعتبر', 'لطفاً عددی صحیح بین ۱ تا ۱۸ وارد کنید.', 'protonControlBox');
+                    updateAllUI();
+                    return;
+                }
+                if (parsed < 1 || parsed > 18) {
+                    triggerValidationAlert('خارج از محدوده جدول کتاب علوم نهم', 'در کتاب علوم نهم عنصرهای عدد اتمی ۱ (هیدروژن) تا ۱۸ (آرگون) بررسی می‌شوند.', 'protonControlBox');
+                    updateAllUI();
+                    return;
+                }
+                var prevP = state.protons;
+                state.protons = parsed;
+                state.electrons = parsed;
+                LabSoundEngine.playProtonChange(parsed >= prevP ? 1 : -1, parsed);
+                updateAllUI();
+            }
+
+            function setElectronsValidated(rawValue) {
+                var cleaned = toEnglishDigits(rawValue).trim();
+                var parsed = Number(cleaned);
+                var el = ELEMENTS[state.protons];
+                if (cleaned === '' || isNaN(parsed) || !Number.isInteger(parsed)) {
+                    triggerValidationAlert('ورودی نامعتبر', 'لطفاً یک عدد صحیح وارد کنید.', 'electronControlBox');
+                    updateAllUI();
+                    return;
+                }
+                if (parsed < el.minE || parsed > el.maxE) {
+                    var rejection = getScientificIonRejectionReason(el, parsed);
+                    state.electrons = parsed < el.minE ? el.minE : el.maxE;
+                    triggerValidationAlert(rejection.title, rejection.message, 'electronControlBox');
+                    updateAllUI();
+                    return;
+                }
+                var prevE = state.electrons;
+                state.electrons = parsed;
+                if (parsed !== state.protons && isElectronCountStable(parsed)) {
+                    LabSoundEngine.playStableIon();
+                } else if (parsed > prevE) {
+                    LabSoundEngine.playElectronAdd(parsed);
+                } else if (parsed < prevE) {
+                    LabSoundEngine.playElectronRemove(parsed);
+                } else {
+                    LabSoundEngine.playUiSwitch();
+                }
+                updateAllUI();
+            }
+
+            // =========================================================================
+            // 6. TEXTBOOK PRESETS, PERIODIC TABLE & 40-CHALLENGE QUIZ ENGINE
+            // =========================================================================
+            function buildTextbookPresets() {
+                var container = document.getElementById('textbookPresetsContainer');
+                if (!container) return;
+                var presets = [
+                    { p: 8,  e: 8,  label: 'اکسیژن', page: 'ص ۵', style: 'neutral' },
+                    { p: 16, e: 16, label: 'گوگرد', page: 'ص ۵', style: 'neutral' },
+                    { p: 6,  e: 6,  label: 'کربن', page: 'ص ۶', style: 'neutral' },
+                    { p: 14, e: 14, label: 'سیلیسیم', page: 'ص ۶', style: 'neutral' },
+                    { p: 15, e: 15, label: 'فسفر', page: 'ص ۶', style: 'neutral' },
+                    { p: 9,  e: 10, label: 'یون فلوئورید خمیردندان', page: 'ص ۶', style: 'anion' },
+                    { p: 11, e: 11, label: 'اتم سدیم', page: 'ص ۱۸', style: 'neutral' },
+                    { p: 11, e: 10, label: 'یون سدیم', page: 'ص ۱۸', style: 'cation' },
+                    { p: 17, e: 17, label: 'اتم کلر', page: 'ص ۱۸', style: 'neutral' },
+                    { p: 17, e: 18, label: 'یون کلرید', page: 'ص ۱۸', style: 'anion' },
+                    { p: 12, e: 10, label: 'یون منیزیم', page: 'ص ۱۹', style: 'cation' },
+                    { p: 8,  e: 10, label: 'یون اکسید', page: 'ص ۱۹', style: 'anion' }
+                ];
+                container.innerHTML = '';
+                presets.forEach(function (item) {
+                    var el = ELEMENTS[item.p];
+                    var chg = item.p - item.e;
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    var cls = 'px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer border ';
+                    if (item.style === 'cation') cls += 'bg-rose-500/15 hover:bg-rose-500/25 text-rose-300 border-rose-500/30';
+                    else if (item.style === 'anion') cls += 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border-emerald-500/30';
+                    else cls += 'bg-slate-800 hover:bg-sky-500/20 text-slate-200 border-slate-700';
+                    btn.className = cls;
+                    btn.innerHTML = item.label + ' (' + renderChemSymbol(item.p, el.symbol, chg) + ') - ' + item.page;
+                    btn.addEventListener('click', function () {
+                        state.protons = item.p;
+                        state.electrons = item.e;
+                        if (item.p !== item.e && isElectronCountStable(item.e)) LabSoundEngine.playStableIon();
+                        else LabSoundEngine.playUiSwitch();
+                        updateAllUI();
+                        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+                    });
+                    container.appendChild(btn);
+                });
+            }
+
+            function buildPeriodicTable() {
+                var grid = document.getElementById('periodicTableGrid');
+                if (!grid) return;
+                grid.innerHTML = '';
+
+                for (var col = 1; col <= 8; col++) {
+                    var header = document.createElement('div');
+                    header.id = 'ptColHeader-' + col;
+                    header.className = 'text-center py-1.5 px-1 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-slate-400 transition';
+                    header.innerHTML = '<div class="text-sky-400 font-extrabold">ستون ' + toPersianNum(col) + '</div>' +
+                        '<div class="text-[10px] text-slate-400 mt-0.5">' + (col === 8 ? 'مدار پر (۸ یا ۲)' : (toPersianNum(col) + ' الکترون ظرفیت')) + '</div>';
+                    grid.appendChild(header);
+                }
+
+                for (var row = 1; row <= 3; row++) {
+                    for (var c = 1; c <= 8; c++) {
+                        var foundEl = null;
+                        for (var z = 1; z <= 18; z++) {
+                            if (ELEMENTS[z].row === row && ELEMENTS[z].col === c) {
+                                foundEl = ELEMENTS[z];
+                                break;
+                            }
+                        }
+                        if (!foundEl) {
+                            var empty = document.createElement('div');
+                            empty.className = 'rounded-2xl border border-dashed border-slate-800/40 bg-slate-950/20 min-h-[68px]';
+                            grid.appendChild(empty);
+                        } else {
+                            var btn = document.createElement('button');
+                            btn.type = 'button';
+                            btn.id = 'ptCell-' + foundEl.z;
+                            btn.setAttribute('data-z', String(foundEl.z));
+                            var catColor = 'bg-slate-800/80 border-slate-700';
+                            if (foundEl.category === 'metal') catColor = 'bg-rose-950/35 border-rose-500/35 hover:border-rose-400';
+                            else if (foundEl.category === 'nonmetal') catColor = 'bg-emerald-950/35 border-emerald-500/35 hover:border-emerald-400';
+                            else if (foundEl.category === 'metalloid') catColor = 'bg-amber-950/35 border-amber-500/35 hover:border-amber-400';
+                            else if (foundEl.category === 'noble') catColor = 'bg-purple-950/35 border-purple-500/35 hover:border-purple-400';
+
+                            btn.className = 'rounded-2xl border p-2 flex flex-col justify-between min-h-[74px] transition transform hover:-translate-y-0.5 cursor-pointer ' + catColor;
+                            var distStr = getShellDistribution(foundEl.z).array.map(toPersianNum).join(',');
+                            btn.innerHTML =
+                                '<div class="w-full flex items-center justify-between text-[10px] font-bold opacity-85">' +
+                                    '<span class="text-sky-300">' + toPersianNum(foundEl.z) + '</span>' +
+                                    '<span dir="rtl" class="text-[10px] text-slate-300">' + distStr + '</span>' +
+                                '</div>' +
+                                '<div class="text-center my-0.5"><span class="text-lg sm:text-xl font-black text-white">' + renderChemSymbol(foundEl.z, foundEl.symbol, 0) + '</span></div>' +
+                                '<div dir="rtl" class="w-full text-center text-[11px] font-semibold text-slate-200 truncate">' + foundEl.name + '</div>';
+
+                            btn.addEventListener('click', function () {
+                                var targetZ = parseInt(this.getAttribute('data-z'), 10);
+                                state.protons = targetZ;
+                                state.electrons = targetZ;
+                                LabSoundEngine.playElementSelect(targetZ);
+                                updateAllUI();
+                                switchTab('tab-lab', false);
+                            });
+                            grid.appendChild(btn);
+                        }
+                    }
+                }
+            }
+
+            function getFilteredQuizList() {
+                if (state.quizFilter === 'all') return ALL_40_MODELS;
+                return ALL_40_MODELS.filter(function (m) { return m.type === state.quizFilter; });
+            }
+
+            function getCurrentQuizModel() {
+                var list = getFilteredQuizList();
+                for (var i = 0; i < list.length; i++) {
+                    if (list[i].key === state.currentQuizKey) return list[i];
+                }
+                return list[0] || ALL_40_MODELS[0];
+            }
+
+            function renderQuizSection() {
+                var list = getFilteredQuizList();
+                var cur = getCurrentQuizModel();
+                if (!cur) return;
+                state.currentQuizKey = cur.key;
+
+                setText('challengeNumberTitle', 'چالش شماره ' + toPersianNum(cur.index) + ' از ۴۰');
+                setText('challengeTopicRef', 'دسته: ' + cur.typeLabel);
+                setHtml('challengePromptText', cur.promptHtml);
+                setText('challengeScoreBadge', 'چالش‌های حل‌شده: ' + toPersianNum(state.solvedQuizKeys.size) + ' از ۴۰');
+
+                var fb = document.getElementById('challengeFeedbackText');
+                if (fb) {
+                    if (state.solvedQuizKeys.has(cur.key)) {
+                        fb.innerHTML = '✅ این چالش (' + cur.symbolHtml + ') را با موفقیت حل کرده‌اید!';
+                        fb.className = 'text-xs sm:text-sm font-extrabold text-emerald-400 pt-1';
+                    } else {
+                        fb.innerHTML = 'ذره خواسته‌شده (' + cur.symbolHtml + ') را در تب «آزمایشگاه» بسازید و سپس دکمه «بررسی ذره ساخته‌شده» را بزنید.';
+                        fb.className = 'text-xs sm:text-sm font-semibold text-slate-400 pt-1';
+                    }
+                }
+
+                var grid = document.getElementById('quizSelectorGrid');
+                if (grid) {
+                    grid.innerHTML = '';
+                    list.forEach(function (m) {
+                        var isSolved = state.solvedQuizKeys.has(m.key);
+                        var isSelected = (m.key === state.currentQuizKey);
+                        var btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'p-2 rounded-xl border text-center transition cursor-pointer flex flex-col items-center justify-center ' +
+                            (isSelected ? 'ring-2 ring-amber-400 bg-amber-500/20 border-amber-400' :
+                             isSolved ? 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300' : 'bg-slate-950/70 border-slate-800 text-slate-300 hover:border-slate-600');
+                        btn.innerHTML =
+                            '<span class="text-[10px] opacity-75">#' + toPersianNum(m.index) + (isSolved ? ' ✓' : '') + '</span>' +
+                            '<span dir="ltr" class="text-xs sm:text-sm font-black text-white mt-0.5">' + m.symbolHtml + '</span>';
+                        btn.addEventListener('click', function () {
+                            state.currentQuizKey = m.key;
+                            LabSoundEngine.playUiSwitch();
+                            renderQuizSection();
+                        });
+                        grid.appendChild(btn);
+                    });
+                }
+            }
+
+            function checkCurrentChallenge() {
+                var cur = getCurrentQuizModel();
+                var fb = document.getElementById('challengeFeedbackText');
+                if (!cur || !fb) return;
+
+                if (state.protons === cur.p && state.electrons === cur.e) {
+                    state.solvedQuizKeys.add(cur.key);
+                    saveSet(SOLVED_QUIZ_KEY, state.solvedQuizKeys);
+                    LabSoundEngine.playChallengeSuccess();
+                    renderQuizSection();
+                    fb.innerHTML = '🎉 آفرین! «' + cur.titleHtml + '» را کاملاً درست ساختید (' + toPersianNum(cur.p) + ' پروتون و ' + toPersianNum(cur.e) + ' الکترون).';
+                    fb.className = 'text-xs sm:text-sm font-extrabold text-emerald-400 pt-1';
+                } else if (state.protons !== cur.p) {
+                    LabSoundEngine.playChallengeFail();
+                    fb.innerHTML = '❌ عنصر فعلی آزمایشگاه (' + ELEMENTS[state.protons].name + ') با عنصر خواسته‌شده متفاوت است. ' + cur.hintHtml;
+                    fb.className = 'text-xs sm:text-sm font-bold text-rose-400 pt-1';
+                } else {
+                    LabSoundEngine.playChallengeFail();
+                    fb.innerHTML = '⚠️ عنصر درست است، اما تعداد الکترون‌های فعلی (' + toPersianNum(state.electrons) + ') نادرست است. ' + cur.hintHtml;
+                    fb.className = 'text-xs sm:text-sm font-bold text-amber-400 pt-1';
+                }
+            }
+
+            // =========================================================================
+            // 7. PRE-TOUR READINESS MODAL & STEP-BY-STEP INTERACTIVE TOUR
+            // =========================================================================
+            var TOUR_STORAGE_KEY = 'ms9_tour_completed_v4';
+            var TOUR_STEPS = [
+                {
+                    tab: 'tab-lab',
+                    targetId: 'tour-step-bohr',
+                    preferCardPos: 'bottom',
+                    title: 'گام ۱: مدل اتمی بور (بدون هسته) در ابتدای آزمایشگاه',
+                    desc: 'اولین چیزی که می‌بینید مدل اتمی بور است! طبق قرارداد کتاب علوم نهم، هسته رسم نمی‌شود و فقط مدارهای الکترونی نمایش داده می‌شوند. الکترون‌های مدار آخر زرد و لایه‌های درونی آبی هستند.'
+                },
+                {
+                    tab: 'tab-lab',
+                    targetId: 'tour-step-controls',
+                    preferCardPos: 'bottom',
+                    title: 'گام ۲: پنل تغییر پروتون و الکترون (مجهز به قوانین علمی)',
+                    desc: 'با دکمه‌های + و − یا نوار لغزنده، تعداد پروتون و الکترون را تغییر دهید. آزمایشگاه فقط اجازه ساخت ۴۰ حالت واقعی اتم و یون در طبیعت را می‌دهد و مانع ساخت یون‌های غیرواقعی می‌شود.'
+                },
+                {
+                    tab: 'tab-lab',
+                    targetId: 'tour-step-stats',
+                    preferCardPos: 'top',
+                    title: 'گام ۳: تابلوی مشخصات عدد اتمی و بار الکتریکی',
+                    desc: 'در این ۴ کارت، نام عنصر، عدد اتمی، فرمول بار الکتریکی ذره (خنثی، کاتیون یا آنیون) و آرایش الکترونی مدارها را به‌صورت زنده مشاهده می‌کنید. (می‌توانید صفحه را آزادانه اسکرول کنید!)'
+                },
+                {
+                    tab: 'tab-lab',
+                    targetId: 'tour-step-presets',
+                    preferCardPos: 'top',
+                    title: 'گام ۴: ایستگاه مثال‌های مستقیم کتاب درسی',
+                    desc: 'در پایین صفحه آزمایشگاه، تمام مثال‌های مهم کتاب علوم نهم (سدیم، کلر، فلوئورید خمیردندان و...) قرار دارند. کادر راهنما به بالای صفحه منتقل شد تا این بخش را در پایین صفحه به وضوح ببینید!'
+                },
+                {
+                    tab: 'tab-lab',
+                    targetId: 'tour-step-dock',
+                    preferCardPos: 'top',
+                    title: 'گام ۵: منوی شیشه‌ای (Liquid Glass) در پایین صفحه',
+                    desc: 'با این منوی شیشه‌ای شناور در پایین صفحه، بدون نیاز به اسکرول می‌توانید فوراً بین «آزمایشگاه»، «جدول تناوبی»، «خودآزمایی ۴۰ چالش»، «دستاوردها و کاپ‌ها» و «تنظیمات» جابه‌جا شوید!'
+                }
+            ];
+
+            var tourState = { active: false, stepIndex: 0, cardPosition: 'bottom' };
+
+            function applyTourCardPosition(pos) {
+                tourState.cardPosition = pos;
+                var cw = document.getElementById('onboardingCardWrapper');
+                if (!cw) return;
+                if (pos === 'top') {
+                    cw.classList.remove('tour-card-bottom');
+                    cw.classList.add('tour-card-top');
+                } else {
+                    cw.classList.remove('tour-card-top');
+                    cw.classList.add('tour-card-bottom');
+                }
+            }
+
+            function clearTourHighlights() {
+                TOUR_STEPS.forEach(function (s) {
+                    var el = document.getElementById(s.targetId);
+                    if (el) el.classList.remove('tour-active-target');
+                });
+            }
+
+            function scrollTargetSimultaneouslyVisible(targetEl, cardPos, isFixedDock) {
+                if (!targetEl || isFixedDock) return;
+                try {
+                    var rect = targetEl.getBoundingClientRect();
+                    var vh = window.innerHeight || document.documentElement.clientHeight;
+                    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+                    var desiredCenterY = (cardPos === 'top') ? (vh * 0.68) : (vh * 0.30);
+                    var currentCenterY = rect.top + rect.height / 2;
+                    var targetScrollTop = Math.max(0, scrollY + (currentCenterY - desiredCenterY));
+                    window.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
+                } catch (e) {}
+            }
+
+            function renderTourStep() {
+                clearTourHighlights();
+                var step = TOUR_STEPS[tourState.stepIndex];
+                if (!step) return;
+
+                if (step.tab && state.activeTab !== step.tab) {
+                    switchTab(step.tab, false);
+                }
+
+                var preferredPos = step.preferCardPos || 'bottom';
+                applyTourCardPosition(preferredPos);
+
+                setText('tourStepBadge', 'گام ' + toPersianNum(tourState.stepIndex + 1) + ' از ' + toPersianNum(TOUR_STEPS.length) + ' — راهنمای آزمایشگاه');
+                setText('tourStepTitle', step.title);
+                setText('tourStepDesc', step.desc);
+
+                var dots = document.getElementById('tourDotsContainer');
+                if (dots) {
+                    dots.innerHTML = '';
+                    for (var i = 0; i < TOUR_STEPS.length; i++) {
+                        var d = document.createElement('span');
+                        d.className = (i === tourState.stepIndex) ? 'w-5 h-2 rounded-full bg-amber-400 transition-all' : 'w-2 h-2 rounded-full bg-slate-700 transition-all';
+                        dots.appendChild(d);
+                    }
+                }
+
+                var btnPrev = document.getElementById('btnTourPrev');
+                var btnNextText = document.getElementById('btnTourNextText');
+                if (btnPrev) btnPrev.disabled = (tourState.stepIndex === 0);
+                if (btnNextText) {
+                    btnNextText.textContent = (tourState.stepIndex === TOUR_STEPS.length - 1) ? 'پایان آموزش و شروع کار 🚀' : 'مرحله بعد ⬅';
+                }
+
+                var targetEl = document.getElementById(step.targetId);
+                if (targetEl) {
+                    targetEl.classList.add('tour-active-target');
+                    var isDock = (step.targetId === 'tour-step-dock');
+                    setTimeout(function () {
+                        scrollTargetSimultaneouslyVisible(targetEl, preferredPos, isDock);
+                    }, 60);
+                }
+            }
+
+            function startStepByStepTour() {
+                var modal = document.getElementById('tourReadinessModal');
+                if (modal) modal.classList.add('hidden');
+                tourState.active = true;
+                tourState.stepIndex = 0;
+                var bd = document.getElementById('onboardingBackdrop');
+                var cw = document.getElementById('onboardingCardWrapper');
+                if (bd) bd.classList.remove('hidden');
+                if (cw) cw.classList.remove('hidden');
+                LabSoundEngine.playTourStep(0);
+                renderTourStep();
+            }
+
+            function finishOnboardingTour() {
+                tourState.active = false;
+                clearTourHighlights();
+                var bd = document.getElementById('onboardingBackdrop');
+                var cw = document.getElementById('onboardingCardWrapper');
+                if (bd) bd.classList.add('hidden');
+                if (cw) cw.classList.add('hidden');
+                safeStorage.setItem(TOUR_STORAGE_KEY, 'done');
+                try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
+            }
+
+            function showTourReadinessPromptIfNeeded(forceShow) {
+                var done = safeStorage.getItem(TOUR_STORAGE_KEY) === 'done';
+                if (!forceShow && done) return;
+                var modal = document.getElementById('tourReadinessModal');
+                if (modal) modal.classList.remove('hidden');
+            }
+
+            // =========================================================================
+            // 8. SPLASH SCREEN CONTROLLER & INITIALIZATION
+            // =========================================================================
+            var splashTimerId = null;
+
+            function enterLabNow() {
+                try {
+                    if (splashTimerId) {
+                        clearInterval(splashTimerId);
+                        splashTimerId = null;
+                    }
+                    var splash = document.getElementById('splashLoadingScreen');
+                    if (splash && !splash.classList.contains('splash-hidden')) {
+                        splash.classList.add('splash-hidden');
+                        LabSoundEngine.unlock();
+                        LabSoundEngine.playLabStart();
+                        setTimeout(function () {
+                            showTourReadinessPromptIfNeeded(false);
+                        }, 300);
+                    }
+                } catch (e) {}
+            }
+
+            function runSplashSequence() {
+                var splash = document.getElementById('splashLoadingScreen');
+                var bar = document.getElementById('splashProgressBar');
+                var pct = document.getElementById('splashPercentText');
+                var st = document.getElementById('splashStatusText');
+                if (!splash) return;
+                splash.classList.remove('splash-hidden');
+
+                var val = 12;
+                if (splashTimerId) clearInterval(splashTimerId);
+                splashTimerId = setInterval(function () {
+                    val += 11;
+                    if (val > 100) val = 100;
+                    if (bar) bar.style.width = val + '%';
+                    if (pct) pct.textContent = toPersianNum(val) + '٪';
+                    if (st) {
+                        if (val < 50) st.textContent = 'در حال بارگذاری مدارهای الکترونی بور...';
+                        else if (val < 85) st.textContent = 'چیدمان ۴۰ چالش و کاپ‌های افتخار...';
+                        else st.textContent = 'آزمایشگاه «مهدی سلطانی» آماده است! ✨';
+                    }
+                    if (val >= 100) {
+                        clearInterval(splashTimerId);
+                        splashTimerId = null;
+                        setTimeout(function () { enterLabNow(); }, 200);
+                    }
+                }, 120);
+            }
+
+            function initLaboratory() {
+                LabSoundEngine.updateSettingsUI();
+                buildTextbookPresets();
+                buildPeriodicTable();
+                updateAllUI();
+                renderQuizSection();
+                renderAchievementsSection();
+
+                // Start Splash Screen Progress
+                runSplashSequence();
+
+                // Instant Enter Button on Splash
+                var btnEnter = document.getElementById('btnEnterLabNow');
+                if (btnEnter) {
+                    btnEnter.addEventListener('click', function () {
+                        enterLabNow();
+                    });
+                }
+
+                // Auto-collapse top header secondary row on scroll down
+                var lastScrollY = 0;
+                window.addEventListener('scroll', function () {
+                    var currentY = window.pageYOffset || document.documentElement.scrollTop || 0;
+                    var subRow = document.getElementById('headerSubRow');
+                    if (subRow) {
+                        if (currentY > 55 && currentY > lastScrollY) {
+                            subRow.classList.add('subrow-collapsed');
+                        } else if (currentY < lastScrollY - 8 || currentY <= 30) {
+                            subRow.classList.remove('subrow-collapsed');
+                        }
+                    }
+                    lastScrollY = currentY;
+                }, { passive: true });
+
+                // Unlock audio on first user interaction anywhere
+                document.addEventListener('pointerdown', function () {
+                    LabSoundEngine.unlock();
+                }, { once: true, passive: true });
+
+                // Liquid Glass Dock Tab Switching
+                document.querySelectorAll('.dock-btn').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        var targetTab = this.getAttribute('data-tab');
+                        if (targetTab) switchTab(targetTab, true);
+                    });
+                });
+
+                document.getElementById('btnHeaderProgressBadge').addEventListener('click', function () {
+                    switchTab('tab-achievements', true);
+                });
+
+                document.getElementById('btnJumpToLabFromTable').addEventListener('click', function () {
+                    switchTab('tab-lab', true);
+                });
+
+                // Proton & Electron Controls
+                document.getElementById('btnProtonInc').addEventListener('click', function () { setProtonsValidated(state.protons + 1); });
+                document.getElementById('btnProtonDec').addEventListener('click', function () { setProtonsValidated(state.protons - 1); });
+                document.getElementById('sliderProtons').addEventListener('input', function (e) { setProtonsValidated(e.target.value); });
+                document.getElementById('inputProtons').addEventListener('change', function (e) { setProtonsValidated(e.target.value); });
+
+                document.getElementById('btnElectronInc').addEventListener('click', function () { setElectronsValidated(state.electrons + 1); });
+                document.getElementById('btnElectronDec').addEventListener('click', function () { setElectronsValidated(state.electrons - 1); });
+                document.getElementById('sliderElectrons').addEventListener('input', function (e) { setElectronsValidated(e.target.value); });
+                document.getElementById('inputElectrons').addEventListener('change', function (e) { setElectronsValidated(e.target.value); });
+
+                document.getElementById('btnMakeNeutral').addEventListener('click', function () {
+                    state.electrons = state.protons;
+                    LabSoundEngine.playUiSwitch();
+                    updateAllUI();
+                });
+
+                document.getElementById('btnMakeStableIon').addEventListener('click', function () {
+                    var el = ELEMENTS[state.protons];
+                    if (el.minE === el.maxE) {
+                        var rej = getScientificIonRejectionReason(el, el.z + 1);
+                        triggerValidationAlert(rej.title, rej.message, 'electronControlBox');
+                        return;
+                    }
+                    state.electrons = el.stableElectrons;
+                    LabSoundEngine.playStableIon();
+                    updateAllUI();
+                });
+
+                // Quiz Filter & Controls
+                document.querySelectorAll('.qfilter-btn').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        state.quizFilter = this.getAttribute('data-qfilter') || 'all';
+                        document.querySelectorAll('.qfilter-btn').forEach(function (b) {
+                            b.className = 'qfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700 cursor-pointer transition';
+                        });
+                        this.className = 'qfilter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 text-slate-950 cursor-pointer transition';
+                        var list = getFilteredQuizList();
+                        if (list.length) state.currentQuizKey = list[0].key;
+                        LabSoundEngine.playUiSwitch();
+                        renderQuizSection();
+                    });
+                });
+
+                document.getElementById('btnCheckChallenge').addEventListener('click', checkCurrentChallenge);
+                document.getElementById('btnGoBuildInLab').addEventListener('click', function () {
+                    switchTab('tab-lab', true);
+                });
+                document.getElementById('btnHintChallenge').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    var cur = getCurrentQuizModel();
+                    var fb = document.getElementById('challengeFeedbackText');
+                    if (cur && fb) {
+                        fb.innerHTML = '💡 راهنمایی علمی: ' + cur.hintHtml;
+                        fb.className = 'text-xs sm:text-sm font-bold text-sky-300 pt-1';
+                    }
+                });
+                document.getElementById('btnNextChallenge').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    var list = getFilteredQuizList();
+                    var idx = 0;
+                    for (var i = 0; i < list.length; i++) {
+                        if (list[i].key === state.currentQuizKey) { idx = i; break; }
+                    }
+                    var next = list[(idx + 1) % list.length];
+                    if (next) state.currentQuizKey = next.key;
+                    renderQuizSection();
+                });
+
+                // Settings Panel Controls
+                document.getElementById('btnSettingToggleSfx').addEventListener('click', LabSoundEngine.toggleSfx);
+                document.getElementById('btnSettingToggleMusic').addEventListener('click', LabSoundEngine.toggleMusic);
+                document.getElementById('sliderMusicVolume').addEventListener('input', function (e) {
+                    LabSoundEngine.setVolume(e.target.value);
+                });
+
+                document.getElementById('btnSettingToggleOrbitMode').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    if (state.orbitMode === 'textbook') {
+                        state.orbitMode = 'orbit';
+                        this.textContent = 'حالت چرخش مداری (متحرک)';
+                        this.className = 'px-4 py-2.5 rounded-xl text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition cursor-pointer';
+                        startOrbitLoop();
+                    } else {
+                        state.orbitMode = 'textbook';
+                        this.textContent = 'حالت کتاب درسی (جفت‌شده چهارجهته)';
+                        this.className = 'px-4 py-2.5 rounded-xl text-xs font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/40 transition cursor-pointer';
+                        if (state.animFrameId) cancelAnimationFrame(state.animFrameId);
+                        renderBohrSvg();
+                    }
+                });
+
+                document.getElementById('btnSettingToggleWatermark').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    state.showWatermark = !state.showWatermark;
+                    this.textContent = state.showWatermark ? 'نمایش داده شود' : 'مخفی شود';
+                    renderBohrSvg();
+                });
+
+                document.getElementById('btnSettingStartTour').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    showTourReadinessPromptIfNeeded(true);
+                });
+
+                document.getElementById('btnSettingShowSplash').addEventListener('click', function () {
+                    runSplashSequence();
+                });
+                document.getElementById('btnShowBrandSplash').addEventListener('click', function () {
+                    runSplashSequence();
+                });
+
+                // Reset Progress Inline Confirmation
+                var btnAsk = document.getElementById('btnResetProgressAsk');
+                var btnConf = document.getElementById('btnResetProgressConfirm');
+                btnAsk.addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    btnConf.classList.remove('hidden');
+                });
+                btnConf.addEventListener('click', function () {
+                    state.discoveredKeys = new Set(['11_11']);
+                    state.solvedQuizKeys = new Set();
+                    saveSet(DISCOVERED_KEY, state.discoveredKeys);
+                    saveSet(SOLVED_QUIZ_KEY, state.solvedQuizKeys);
+                    btnConf.classList.add('hidden');
+                    updateDiscoveryBadges();
+                    renderAchievementsSection();
+                    renderQuizSection();
+                    showToastNotification('بازنشانی انجام شد', 'تمام دستاوردها و چالش‌ها به حالت اولیه بازگردانده شدند.', 'info');
+                });
+
+                // Pre-Tour Readiness Modal Buttons
+                document.getElementById('btnConfirmStartTour').addEventListener('click', function () {
+                    startStepByStepTour();
+                });
+                document.getElementById('btnDeclineStartTour').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    var modal = document.getElementById('tourReadinessModal');
+                    if (modal) modal.classList.add('hidden');
+                    safeStorage.setItem(TOUR_STORAGE_KEY, 'done');
+                });
+
+                // Tour Navigation Buttons
+                document.getElementById('btnTourPrev').addEventListener('click', function () {
+                    if (tourState.stepIndex > 0) {
+                        tourState.stepIndex--;
+                        LabSoundEngine.playTourStep(tourState.stepIndex);
+                        renderTourStep();
+                    }
+                });
+                document.getElementById('btnTourNext').addEventListener('click', function () {
+                    if (tourState.stepIndex < TOUR_STEPS.length - 1) {
+                        tourState.stepIndex++;
+                        LabSoundEngine.playTourStep(tourState.stepIndex);
+                        renderTourStep();
+                    } else {
+                        finishOnboardingTour();
+                    }
+                });
+                document.getElementById('btnTourSkip').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    finishOnboardingTour();
+                });
+                document.getElementById('btnTourFlipPos').addEventListener('click', function () {
+                    LabSoundEngine.playUiSwitch();
+                    var nextPos = (tourState.cardPosition === 'top') ? 'bottom' : 'top';
+                    applyTourCardPosition(nextPos);
+                });
+
+                document.getElementById('btnCloseToast').addEventListener('click', hideValidationToast);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initLaboratory);
+            } else {
+                initLaboratory();
+            }
+        })();
+    </script>
+</body>
+</html>
